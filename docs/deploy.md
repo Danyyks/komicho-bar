@@ -10,6 +10,7 @@ Projeto Firebase: **`komicho-ce5ba`** (conta danyy.jonathan@gmail.com). O login 
 - [x] Login com Google ativado e Firestore criado (Standard, `southamerica-east1`, modo de produção).
 - [x] Login testado: Google vinculado à conta, e-mail verificado, login por e-mail/senha desativado.
 - [x] Vercel: projeto `komicho-bar` ligado ao GitHub (push na `main` publica sozinho) em **https://komicho-bar.vercel.app**.
+- [x] `komicho-bar.vercel.app` em Authentication → Domínios autorizados.
 - [x] Regras publicadas: só o ID `NNFz46NJz2gyNk5mujUb3D2MEIh2` com o e-mail `danyy.jonathan@gmail.com` verificado lê e grava. Acesso sem login testado: `PERMISSION_DENIED`.
 
 ## 1. Ativar no console (só pelo navegador, com a conta do Dany)

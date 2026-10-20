@@ -8,10 +8,10 @@ import { useAviso } from "@/context/AvisoContext";
 import { CabecalhoDetalhe } from "@/components/Cabecalho";
 import { Confirmar } from "@/components/Confirmar";
 import { Sheet } from "@/components/Sheet";
-import { Botao, BotaoIcone, Campo, Cartao, Chip, TituloSecao } from "@/components/ui";
+import { Botao, BotaoIcone, Campo, CampoValor, Cartao, Chip, TituloSecao } from "@/components/ui";
 import { reais, totalItens } from "@/lib/dinheiro";
 import { haQuantoTempo } from "@/lib/datas";
-import { cn, vibrar } from "@/lib/utils";
+import { cn, uid, vibrar } from "@/lib/utils";
 import { useVoltar } from "@/hooks/useVoltar";
 import { CATEGORIAS_PRODUTO, type CategoriaProduto, type Comanda } from "@/types";
 import { FecharConta } from "./FecharConta";
@@ -174,14 +174,32 @@ function GradeProdutos({ comanda }: { comanda: Comanda }) {
 
   // Quantas unidades de cada produto já estão na comanda (bolinha no canto do botão)
   const naComanda = new Map(comanda.itens.map((i) => [i.produtoId, i.qtd]));
+  const [avulso, setAvulso] = useState(false);
+
+  // Botão de item digitado na hora (nome e valor livres), sempre visível no título
+  const botaoAvulso = (
+    <button
+      onClick={() => setAvulso(true)}
+      className="flex h-10 items-center gap-1.5 rounded-full bg-marca-suave pr-4 pl-3 text-[15px] font-semibold text-marca-tinta active:scale-95"
+    >
+      <Plus className="size-[18px]" strokeWidth={2.6} /> Outro item
+    </button>
+  );
+  const painelAvulso = <ItemAvulso comanda={comanda} aberto={avulso} onFechar={() => setAvulso(false)} />;
 
   if (produtos.length === 0) {
-    return <p className="mt-8 text-center text-[16px] text-texto-2">Cadastre produtos na aba Produtos.</p>;
+    return (
+      <>
+        <TituloSecao acao={botaoAvulso}>Adicionar</TituloSecao>
+        <p className="mt-2 text-center text-[16px] text-texto-2">Use Outro item ou cadastre produtos na aba Produtos.</p>
+        {painelAvulso}
+      </>
+    );
   }
 
   return (
     <>
-      <TituloSecao>Adicionar</TituloSecao>
+      <TituloSecao acao={botaoAvulso}>Adicionar</TituloSecao>
 
       {/* Chips de categoria (rolagem lateral) */}
       <div className="sem-barra -mx-4 flex gap-2 overflow-x-auto px-4 pb-3">
@@ -231,7 +249,76 @@ function GradeProdutos({ comanda }: { comanda: Comanda }) {
           );
         })}
       </div>
+      {painelAvulso}
     </>
+  );
+}
+
+/** Painel "Outro item": adiciona à comanda algo fora do cardápio, com nome e valor digitados. */
+function ItemAvulso({ comanda, aberto, onFechar }: { comanda: Comanda; aberto: boolean; onFechar: () => void }) {
+  const { mudarQtd } = useDados();
+  const avisar = useAviso();
+  const [nome, setNome] = useState("");
+  const [preco, setPreco] = useState(0);
+  const [qtd, setQtd] = useState(1);
+
+  // Cada vez que abre, começa limpo
+  useEffect(() => {
+    if (!aberto) return;
+    setNome("");
+    setPreco(0);
+    setQtd(1);
+  }, [aberto]);
+
+  function adicionar() {
+    if (preco <= 0) return avisar("Digite o valor do item.");
+    const nomeFinal = nome.trim() || "Item avulso";
+    // Id próprio com prefixo "avulso-": não se mistura com os produtos do cardápio
+    mudarQtd(comanda.id, { id: `avulso-${uid()}`, nome: nomeFinal, preco }, qtd);
+    vibrar();
+    onFechar();
+    avisar(`${qtd}× ${nomeFinal} na comanda`);
+  }
+
+  return (
+    <Sheet
+      aberto={aberto}
+      onFechar={onFechar}
+      titulo="Outro item"
+      rodape={
+        <Botao bloco onClick={adicionar}>
+          Adicionar {preco > 0 ? reais(preco * qtd) : ""}
+        </Botao>
+      }
+    >
+      <Campo rotulo="Nome do item" placeholder="Ex.: Salgado, cigarro" value={nome} onChange={(e) => setNome(e.target.value)} autoCapitalize="sentences" />
+
+      <div className="py-6">
+        <CampoValor rotulo="Valor de cada um" valor={preco} onMudar={setPreco} />
+      </div>
+
+      {/* Quantidade com − e + */}
+      <div className="flex items-center justify-between rounded-2xl bg-elevado py-2 pr-2 pl-4">
+        <span className="text-[17px] font-medium">Quantidade</span>
+        <div className="flex items-center gap-1">
+          <button
+            aria-label="Diminuir quantidade"
+            onClick={() => setQtd((q) => Math.max(1, q - 1))}
+            className="grid size-11 place-items-center rounded-full bg-superficie active:scale-90 dark:bg-[#3a332c]"
+          >
+            <Minus className="size-5" strokeWidth={2.6} />
+          </button>
+          <span className="num w-10 text-center text-[20px] font-bold">{qtd}</span>
+          <button
+            aria-label="Aumentar quantidade"
+            onClick={() => setQtd((q) => Math.min(99, q + 1))}
+            className="grid size-11 place-items-center rounded-full bg-superficie active:scale-90 dark:bg-[#3a332c]"
+          >
+            <Plus className="size-5" strokeWidth={2.6} />
+          </button>
+        </div>
+      </div>
+    </Sheet>
   );
 }
 

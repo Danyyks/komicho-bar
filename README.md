@@ -23,7 +23,7 @@ App instalável (PWA) feito para o dia a dia de um bar de vila: abre comanda num
 ![Firebase](https://img.shields.io/badge/Firebase-F2A93B?style=flat-square&logo=firebase&logoColor=14110E)
 ![Motion](https://img.shields.io/badge/Motion-F2A93B?style=flat-square&logo=framer&logoColor=14110E)
 ![PWA](https://img.shields.io/badge/PWA-instalável-14110E?style=flat-square&logo=pwa&logoColor=F2A93B)
-![Versão](https://img.shields.io/badge/versão-0.1-14110E?style=flat-square)
+![Versão](https://img.shields.io/badge/versão-0.2-14110E?style=flat-square)
 
 </div>
 
@@ -71,6 +71,7 @@ O diferencial está no acabamento. O visual segue o padrão dos melhores apps na
 
 - 🍺 **Comandas** no nome do freguês, com aviso se já houver uma aberta para a mesma pessoa
 - ➕ **Grade de produtos** por categoria: cada toque soma 1, com contador no botão e ajuste de − / +
+- ✏️ **Outro item**: adiciona à comanda algo fora do cardápio, com nome, valor e quantidade digitados na hora
 - 💵 **Fechar conta** em Dinheiro (com cálculo de troco), Pix, Cartão ou Fiado, com desconto opcional
 - 📒 **Fiado**: saldo de cada cliente, histórico com os itens de cada comanda, receber pagamento (total ou parcial) e anotar valor avulso
 - 📊 **Balanço** por dia, semana, mês e ano: entrou, saiu e sobrou, gráfico de barras (toque numa barra para abrir o dia ou o mês), entradas por forma de pagamento e gastos por categoria

@@ -113,8 +113,13 @@ export function CampoValor({ valor, onMudar, rotulo, autoFocus }: { valor: numbe
           value={reaisSemSimbolo(valor)}
           // Só os dígitos importam: o valor é sempre "centavos" e a vírgula é desenhada
           onChange={(e) => onMudar(Math.min(Number(e.target.value.replace(/\D/g, "") || 0), 99_999_999))}
-          // Cursor sempre no fim, como numa calculadora
-          onFocus={(e) => requestAnimationFrame(() => e.target.setSelectionRange(99, 99))}
+          // Cursor sempre no fim, como numa calculadora: se o toque cair no meio do número,
+          // os dígitos entrariam na posição errada (ex.: 6,50 virando 60,50)
+          onSelect={(e) => {
+            const campo = e.currentTarget;
+            const fim = campo.value.length;
+            if (campo.selectionStart !== fim || campo.selectionEnd !== fim) campo.setSelectionRange(fim, fim);
+          }}
           className="num min-w-0 bg-transparent text-left text-[44px] leading-tight font-semibold text-texto caret-marca outline-none"
           style={{ width: `${Math.max(4, reaisSemSimbolo(valor).length) + 0.5}ch` }}
         />

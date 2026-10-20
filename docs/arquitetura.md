@@ -39,6 +39,7 @@ Coleções (uma por tipo, todas na raiz do Firestore):
 
 ### Regras de negócio importantes
 
+- **Item avulso ("Outro item"):** entra na comanda como um `ItemComanda` comum, com `produtoId` começando em `avulso-` (id único), então nunca se junta a um produto do cardápio. Não é salvo em Produtos.
 - **Preço congelado na venda:** cada `ItemComanda` copia nome e preço do produto. Mudar o preço depois não altera vendas antigas.
 - **Fiado só entra no Balanço quando é pago.** Pendurar uma comanda cria `MovimentoFiado(conta)`, não lançamento. Receber cria **ao mesmo tempo** um `Lancamento(entrada, origem: "fiado")` e um `MovimentoFiado(pagamento)` ligados por `lancamentoId`.
 - **Apagar um lado apaga o outro:** remover o pagamento no fiado remove a entrada do Balanço, e vice-versa (`removerMovimento` / `removerLancamento`).
@@ -63,6 +64,7 @@ Painéis (bottom sheets) não são rotas: são componentes `Sheet` abertos por e
 
 - **`Sheet` e `BotaoFlutuante` usam portal no `<body>`.** A animação de entrada das telas usa `transform`, que "prende" elementos `position: fixed` dentro dela.
 - **Gravações sem `await`.** Com o Firestore offline, a promessa só termina quando a internet volta; a tela já atualiza na hora pelo cache local. Falhas viram aviso na tela (`definirAvisoDeErro`).
+- **"Carregado" só depois de todas as coleções responderem** (DadosContext): as telas de detalhe só concluem que um item não existe quando tudo chegou.
 - **`comandasRef` no DadosContext:** toques rápidos seguidos no mesmo produto leem sempre a versão mais recente da comanda, sem perder nenhum.
 - **Teclado:** `interactive-widget=resizes-content` no Android e medição do `visualViewport` no iPhone mantêm o painel acima do teclado.
 - **Regras CSS base dentro de `@layer base`** para as classes do Tailwind conseguirem sobrescrever (ex.: tamanho do campo de valor).

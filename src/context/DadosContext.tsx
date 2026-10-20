@@ -54,19 +54,37 @@ function useDadosInterno() {
 
   // Escuta todas as coleções em tempo real
   useEffect(() => {
+    // "Carregado" só quando TODAS as coleções responderam pela primeira vez: senão uma
+    // tela de detalhe aberta direto (ex.: recarregar /comanda/123) acharia que a comanda
+    // não existe e voltaria para a lista antes de ela chegar da nuvem
+    const responderam = new Set<string>();
+    const marcar = (colecao: string) => {
+      responderam.add(colecao);
+      if (responderam.size === Object.keys(repos).length) setCarregado(true);
+    };
     const parar = [
       repos.produtos.assinar((p) => {
         setProdutos(p.sort((a, b) => a.criadoEm - b.criadoEm));
-        setCarregado(true);
+        marcar("produtos");
       }),
       repos.comandas.assinar((c) => {
         const ordenadas = c.sort((a, b) => a.criadoEm - b.criadoEm);
         comandasRef.current = ordenadas;
         setComandas(ordenadas);
+        marcar("comandas");
       }),
-      repos.clientes.assinar(setClientes),
-      repos.fiado.assinar((f) => setFiado(f.sort((a, b) => b.data - a.data))),
-      repos.lancamentos.assinar(setLancamentos),
+      repos.clientes.assinar((c) => {
+        setClientes(c);
+        marcar("clientes");
+      }),
+      repos.fiado.assinar((f) => {
+        setFiado(f.sort((a, b) => b.data - a.data));
+        marcar("fiado");
+      }),
+      repos.lancamentos.assinar((l) => {
+        setLancamentos(l);
+        marcar("lancamentos");
+      }),
     ];
     return () => parar.forEach((fn) => fn());
   }, []);

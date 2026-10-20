@@ -82,7 +82,10 @@ export function Balanco() {
 
       {/* Navegação entre períodos: ‹ Outubro 2026 › */}
       <div className="mt-3 flex items-center justify-between">
-        <button aria-label="Período anterior" onClick={() => setRef(deslocar(escala, ref, -1))} className="grid size-11 place-items-center rounded-full text-texto-2 active:bg-elevado">
+        <button aria-label="Período anterior" onClick={() => {
+            setRef(deslocar(escala, ref, -1));
+            setVerTodos(false);
+          }} className="grid size-11 place-items-center rounded-full text-texto-2 active:bg-elevado">
           <ChevronLeft className="size-6" />
         </button>
         <button onClick={() => setRef(new Date())} className="text-[17px] font-semibold" aria-label="Voltar para o período atual">
@@ -90,7 +93,10 @@ export function Balanco() {
         </button>
         <button
           aria-label="Próximo período"
-          onClick={() => setRef(deslocar(escala, ref, +1))}
+          onClick={() => {
+            setRef(deslocar(escala, ref, +1));
+            setVerTodos(false);
+          }}
           className={cn("grid size-11 place-items-center rounded-full text-texto-2 active:bg-elevado", ehAtual && "invisible")}
         >
           <ChevronRight className="size-6" />

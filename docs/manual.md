@@ -11,6 +11,7 @@ Guia rápido para quem trabalha no balcão. O app tem 4 abas no rodapé: **Coman
 **Adicionar o que a pessoa pediu**
 - Escolha a categoria (Cervejas, Destilados...) e toque no produto. **Cada toque soma 1.**
 - Errou? Use o **−** na lista de cima.
+- **Algo que não está no cardápio?** Toque em **Outro item**, digite o nome, o valor de cada um e a quantidade, e toque em **Adicionar**.
 
 **Fechar a conta**
 1. Toque em **Fechar conta**.
