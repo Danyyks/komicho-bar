@@ -62,9 +62,9 @@ export function dadosDemo() {
 
   // Comandas abertas agora
   const comandas: Comanda[] = [
-    { id: uid(), criadoEm: agora - 42 * 60_000, nome: "Mesa 2", itens: [item("Brahma 600 ml", 2), item("Torresmo", 1), item("Pinga (dose)", 1)] },
+    { id: uid(), criadoEm: agora - 42 * 60_000, nome: "Carlão", itens: [item("Brahma 600 ml", 2), item("Torresmo", 1), item("Pinga (dose)", 1)] },
     { id: uid(), criadoEm: agora - 15 * 60_000, nome: "Seu Zé", itens: [item("Original 600 ml", 1), item("Amendoim", 1)] },
-    { id: uid(), criadoEm: agora - 3 * 60_000, nome: "Balcão", itens: [item("Coca-Cola lata", 1)] },
+    { id: uid(), criadoEm: agora - 3 * 60_000, nome: "Marquinhos", itens: [item("Coca-Cola lata", 1)] },
   ];
 
   // Clientes do fiado e o histórico de cada um
@@ -88,6 +88,7 @@ export function dadosDemo() {
   pagamento(clientes[2], 5, 3600);
 
   // Histórico de vendas e gastos dos últimos 14 meses (para o Balanço ter vida)
+  const FREGUESES = ["Carlão", "Marquinhos", "Seu Zé", "Dona Lúcia", "Tião", "Neguinho", "Fernando", "Toninho"];
   const formas: FormaPagamento[] = ["dinheiro", "pix", "pix", "cartao"];
   const gastos: [CategoriaGasto, number, number][] = [
     ["Bebidas", 3, 52000],
@@ -109,7 +110,7 @@ export function dadosDemo() {
       lancamentos.push({
         id: uid(), criadoEm: momento, tipo: "entrada", data: momento, origem: "comanda",
         valor: Math.round((1500 + sorte() * 5500) / 50) * 50,
-        forma: formas[Math.floor(sorte() * formas.length)], descricao: v % 3 === 0 ? "Balcão" : `Mesa ${1 + Math.floor(sorte() * 6)}`,
+        forma: formas[Math.floor(sorte() * formas.length)], descricao: FREGUESES[Math.floor(sorte() * FREGUESES.length)],
       });
     }
     // Compras da semana distribuídas pelos dias

@@ -6,7 +6,7 @@ Guia rápido para quem trabalha no balcão. O app tem 4 abas no rodapé: **Coman
 
 **Abrir uma comanda**
 1. Toque em **Nova comanda** (botão amarelo).
-2. Toque numa mesa ou no nome do cliente. Se não tiver na lista, digite o nome e toque em **Abrir comanda**.
+2. Digite o nome da pessoa e toque em **Abrir comanda**. Se já houver uma comanda aberta com esse nome, o app avisa e oferece abrir a dela.
 
 **Adicionar o que a pessoa pediu**
 - Escolha a categoria (Cervejas, Destilados...) e toque no produto. **Cada toque soma 1.**

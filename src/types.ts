@@ -27,7 +27,7 @@ export interface ItemComanda {
   qtd: number;
 }
 
-/** Comanda aberta (mesa ou pessoa). Ao fechar, vira lançamento ou fiado e é apagada. */
+/** Comanda aberta no nome de uma pessoa. Ao fechar, vira lançamento ou fiado e é apagada. */
 export interface Comanda extends Entidade {
   nome: string;
   itens: ItemComanda[];

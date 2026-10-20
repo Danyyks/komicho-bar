@@ -33,7 +33,7 @@ App instalável (PWA) feito para o dia a dia de um bar de vila: abre comanda num
 
 Todo boteco pequeno tem o mesmo caderno: a comanda anotada no guardanapo, o fiado do cliente fiel numa página rabiscada e, no fim do mês, a dúvida de sempre: **sobrou dinheiro ou não?**
 
-O Komicho Bar troca esse caderno por um app que qualquer pessoa da família consegue usar. Abrir uma comanda é tocar em "Mesa 2". Somar uma cerveja é tocar no botão da cerveja. Fechar a conta é escolher Dinheiro, Pix, Cartão ou Fiado, e o app faz o resto: calcula o troco, pendura na conta do cliente ou lança a venda no Balanço sozinho.
+O Komicho Bar troca esse caderno por um app que qualquer pessoa da família consegue usar. Abrir uma comanda é digitar o nome do freguês. Somar uma cerveja é tocar no botão da cerveja. Fechar a conta é escolher Dinheiro, Pix, Cartão ou Fiado, e o app faz o resto: calcula o troco, pendura na conta do cliente ou lança a venda no Balanço sozinho.
 
 O diferencial está no acabamento. O visual segue o padrão dos melhores apps nativos (Apple e Google): painéis que sobem de baixo com efeito de mola, título grande que encolhe ao rolar, vibração leve ao tocar, modo escuro pensado para a noite no bar e botões grandes, porque quem usa está atrás do balcão, com pressa. Tudo que apaga tem "Desfazer", e o app abre mesmo sem internet.
 
@@ -69,7 +69,7 @@ O diferencial está no acabamento. O visual segue o padrão dos melhores apps na
 
 ## Funcionalidades
 
-- 🍺 **Comandas** por nome ou mesa, abertas com um toque (atalhos de mesas, balcão e clientes do fiado)
+- 🍺 **Comandas** no nome do freguês, com aviso se já houver uma aberta para a mesma pessoa
 - ➕ **Grade de produtos** por categoria: cada toque soma 1, com contador no botão e ajuste de − / +
 - 💵 **Fechar conta** em Dinheiro (com cálculo de troco), Pix, Cartão ou Fiado, com desconto opcional
 - 📒 **Fiado**: saldo de cada cliente, histórico com os itens de cada comanda, receber pagamento (total ou parcial) e anotar valor avulso

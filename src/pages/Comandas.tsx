@@ -5,7 +5,7 @@ import { ChevronRight, Plus, ReceiptText } from "lucide-react";
 import { useDados } from "@/context/DadosContext";
 import { CabecalhoAba } from "@/components/Cabecalho";
 import { Sheet } from "@/components/Sheet";
-import { Botao, BotaoFlutuante, Campo, Cartao, Chip, Vazio } from "@/components/ui";
+import { Botao, BotaoFlutuante, Campo, Cartao, Vazio } from "@/components/ui";
 import { reais, totalItens } from "@/lib/dinheiro";
 import { haQuantoTempo } from "@/lib/datas";
 
@@ -71,22 +71,19 @@ export function Comandas() {
   );
 }
 
-/** Painel "Nova comanda": um toque num atalho já abre; ou digita um nome. */
+/** Painel "Nova comanda": digita o nome da pessoa e abre (o bar não tem mesas numeradas). */
 function NovaComanda({ aberto, onFechar }: { aberto: boolean; onFechar: () => void }) {
-  const { comandas, clientes, abrirComanda } = useDados();
+  const { comandas, abrirComanda } = useDados();
   const navigate = useNavigate();
   const [nome, setNome] = useState("");
 
-  // Atalhos: mesas e balcão livres + clientes do fiado (sem repetir o que já está aberto)
-  const abertos = new Set(comandas.map((c) => c.nome.toLowerCase()));
-  const atalhos = [...["Mesa 1", "Mesa 2", "Mesa 3", "Mesa 4", "Mesa 5", "Mesa 6", "Balcão"], ...clientes.map((c) => c.nome)].filter(
-    (n) => !abertos.has(n.toLowerCase()),
-  );
+  // Avisa se já existe comanda aberta com o mesmo nome (evita duas para a mesma pessoa)
+  const repetida = comandas.find((c) => c.nome.toLowerCase() === nome.trim().toLowerCase());
 
   /** Cria a comanda e já entra nela. */
-  function abrir(n: string) {
-    if (!n.trim()) return;
-    const c = abrirComanda(n);
+  function abrir() {
+    if (!nome.trim()) return;
+    const c = abrirComanda(nome);
     setNome("");
     onFechar();
     navigate(`/comanda/${c.id}`);
@@ -98,7 +95,7 @@ function NovaComanda({ aberto, onFechar }: { aberto: boolean; onFechar: () => vo
       onFechar={onFechar}
       titulo="Nova comanda"
       rodape={
-        <Botao bloco onClick={() => abrir(nome)} disabled={!nome.trim()} className="disabled:opacity-40">
+        <Botao bloco onClick={abrir} disabled={!nome.trim()} className="disabled:opacity-40">
           Abrir comanda
         </Botao>
       }
@@ -106,24 +103,32 @@ function NovaComanda({ aberto, onFechar }: { aberto: boolean; onFechar: () => vo
       <form
         onSubmit={(e) => {
           e.preventDefault();
-          abrir(nome);
+          abrir();
         }}
       >
-        <Campo rotulo="Nome ou mesa" placeholder="Ex.: Mesa 3 ou Seu Zé" value={nome} onChange={(e) => setNome(e.target.value)} autoCapitalize="words" enterKeyHint="go" />
+        <Campo
+          rotulo="Nome"
+          placeholder="Ex.: Seu Zé"
+          value={nome}
+          onChange={(e) => setNome(e.target.value)}
+          autoCapitalize="words"
+          enterKeyHint="go"
+          autoFocus
+        />
       </form>
 
-      {/* Atalhos de um toque */}
-      {atalhos.length > 0 && (
-        <>
-          <p className="mt-6 mb-3 text-[15px] font-medium text-texto-2">Ou toque para abrir</p>
-          <div className="flex flex-wrap gap-2">
-            {atalhos.map((a) => (
-              <Chip key={a} onClick={() => abrir(a)}>
-                {a}
-              </Chip>
-            ))}
-          </div>
-        </>
+      {/* Aviso de nome repetido, com atalho para a comanda que já está aberta */}
+      {repetida && (
+        <button
+          onClick={() => {
+            setNome("");
+            onFechar();
+            navigate(`/comanda/${repetida.id}`);
+          }}
+          className="mt-3 w-full rounded-2xl bg-marca-suave px-4 py-3 text-left text-[15px] text-marca-tinta active:scale-[0.98]"
+        >
+          {repetida.nome} já tem uma comanda aberta. <span className="font-semibold">Abrir a dela</span>
+        </button>
       )}
     </Sheet>
   );
