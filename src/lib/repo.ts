@@ -1,5 +1,5 @@
 // Repositório genérico: a mesma API funciona com o Firestore (nuvem) ou com o
-// localStorage (modo local), e as telas não precisam saber qual está em uso.
+// localStorage (modo demo), e as telas não precisam saber qual está em uso.
 import { collection, deleteDoc, doc, onSnapshot, setDoc, updateDoc, writeBatch } from "firebase/firestore";
 import { db, modoDemo, nuvemLigada } from "./firebase";
 import { uid } from "./utils";
@@ -19,7 +19,7 @@ export function definirAvisoDeErro(fn: (e: unknown) => void) {
   aoFalhar = fn;
 }
 
-// ---------- Modo local (localStorage) ----------
+// ---------- Modo demo (localStorage) ----------
 
 function lerLocal<T>(colecao: string): T[] {
   try {

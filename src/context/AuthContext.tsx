@@ -1,5 +1,5 @@
-// Login com Google + lista de e-mails permitidos. No modo local não há login:
-// o app abre direto, porque os dados ficam só no aparelho.
+// Login só com Google e só para os e-mails permitidos. No modo demo não há login:
+// o app abre direto, porque os dados fictícios ficam só no aparelho.
 import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
 import {
   GoogleAuthProvider,
@@ -26,9 +26,9 @@ interface Auth {
 
 const AuthContext = createContext<Auth | null>(null);
 
-/** Confere se o e-mail está na lista do .env (lista vazia = libera, útil em testes). */
+/** Confere se o e-mail está na lista de permitidos (a lista nunca fica vazia). */
 function permitido(email: string): boolean {
-  return emailsPermitidos.length === 0 || emailsPermitidos.includes(email.toLowerCase());
+  return emailsPermitidos.includes(email.toLowerCase());
 }
 
 export function AuthProvider({ children }: { children: ReactNode }) {
@@ -60,6 +60,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     if (!auth) return;
     setErro(null);
     const provedor = new GoogleAuthProvider();
+    // Sempre mostra a escolha de conta (evita entrar direto numa conta errada do celular)
+    provedor.setCustomParameters({ prompt: "select_account" });
     try {
       await signInWithPopup(auth, provedor);
     } catch (e) {

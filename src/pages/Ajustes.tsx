@@ -4,7 +4,7 @@ import { useAuth } from "@/context/AuthContext";
 import { useTema, type Tema } from "@/context/TemaContext";
 import { Sheet } from "@/components/Sheet";
 import { Botao, Segmentado } from "@/components/ui";
-import { modoDemo, nuvemLigada } from "@/lib/firebase";
+import { nuvemLigada } from "@/lib/firebase";
 import { useInstalar } from "@/hooks/useInstalar";
 
 export function Ajustes({ aberto, onFechar }: { aberto: boolean; onFechar: () => void }) {
@@ -45,7 +45,7 @@ export function Ajustes({ aberto, onFechar }: { aberto: boolean; onFechar: () =>
         </div>
       )}
 
-      {/* Conta: nuvem (com login) ou modo local */}
+      {/* Conta: nuvem (com login) ou modo demo */}
       <p className="mt-7 mb-2.5 text-[15px] font-medium text-texto-2">Dados</p>
       {nuvemLigada && usuario ? (
         <div className="rounded-2xl bg-elevado p-4">
@@ -59,11 +59,7 @@ export function Ajustes({ aberto, onFechar }: { aberto: boolean; onFechar: () =>
       ) : (
         <div className="flex gap-3 rounded-2xl bg-elevado p-4">
           <CloudOff className="mt-0.5 size-5 shrink-0 text-texto-2" />
-          <p className="text-[15px] text-texto-2">
-            {modoDemo
-              ? "Modo demonstração: dados fictícios, só neste aparelho."
-              : "Modo local: os dados ficam salvos só neste aparelho. Para guardar na nuvem, siga o guia docs/deploy.md."}
-          </p>
+          <p className="text-[15px] text-texto-2">Modo demonstração: dados fictícios, só neste aparelho.</p>
         </div>
       )}
 

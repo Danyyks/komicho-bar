@@ -2,7 +2,7 @@
 // fechar conta, anotar gasto...). As telas só leem daqui e chamam as ações.
 import { createContext, useContext, useEffect, useRef, useState, type ReactNode } from "react";
 import { colecaoLocalVazia, criarRepo, gravarJuntos, type Operacao } from "@/lib/repo";
-import { modoDemo, nuvemLigada } from "@/lib/firebase";
+import { nuvemLigada } from "@/lib/firebase";
 import { cardapioExemplo, dadosDemo } from "@/lib/seed";
 import { totalItens } from "@/lib/dinheiro";
 import { uid } from "@/lib/utils";
@@ -42,19 +42,14 @@ function useDadosInterno() {
   // Cópia sempre atual das comandas, lida nas ações (o estado do React chega um render depois)
   const comandasRef = useRef<Comanda[]>([]);
 
-  // Primeira abertura no modo local: cria o cardápio de exemplo (ou o banco demo inteiro)
+  // Primeira abertura do modo demo: cria o banco fictício inteiro no aparelho
   useEffect(() => {
     if (nuvemLigada || !colecaoLocalVazia("produtos")) return;
-    if (modoDemo) {
-      const demo = dadosDemo();
-      const ops: Operacao[] = [];
-      for (const [colecao, itens] of Object.entries(demo)) {
-        for (const item of itens as Entidade[]) ops.push({ tipo: "set", colecao, item });
-      }
-      gravarJuntos(ops);
-    } else {
-      gravarJuntos(cardapioExemplo().map((item) => ({ tipo: "set", colecao: "produtos", item })));
+    const ops: Operacao[] = [];
+    for (const [colecao, itens] of Object.entries(dadosDemo())) {
+      for (const item of itens as Entidade[]) ops.push({ tipo: "set", colecao, item });
     }
+    gravarJuntos(ops);
   }, []);
 
   // Escuta todas as coleções em tempo real

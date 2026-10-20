@@ -5,7 +5,7 @@ App PWA do Komicho Bar (boteco de vila do Dany): comandas, fiado e balanço de e
 ## Comandos
 
 ```bash
-npm run dev        # modo local (ou nuvem, se houver .env)
+npm run dev        # app real: Firebase komicho-ce5ba, login só com o Google do Dany
 npm run dev:demo   # dados fictícios, sem login (para testar telas e tirar prints)
 npm run build      # checa tipos (tsc -b) e gera dist/
 npm run icones     # regenera os ícones do PWA a partir de public/favicon.svg
@@ -33,5 +33,6 @@ npm run icones     # regenera os ícones do PWA a partir de public/favicon.svg
 
 - Elementos `fixed` dentro da tela animada quebram: use portal (como `Sheet` e `BotaoFlutuante`).
 - CSS próprio fora de `@layer base`/`@utility` vence as classes do Tailwind.
-- A allowlist precisa bater em `firestore.rules` e `VITE_ALLOWED_EMAILS`.
+- Login **só com Google e só `danyy.jonathan@gmail.com`**: a lista precisa bater em `firestore.rules` e `RESERVA_EMAILS`/`VITE_ALLOWED_EMAILS` (`src/lib/firebase.ts`). Nunca deixar a lista vazia.
+- Firebase CLI já logado na conta do Dany; `.firebaserc` aponta para `komicho-ce5ba`.
 - O Git do projeto é **isolado nesta pasta** (a home `C:\Users\danyy` também é um repositório; nunca commitar lá).

@@ -12,7 +12,7 @@ App instalável (PWA) feito para o dia a dia de um bar de vila: abre comanda num
 
 ![Em breve](https://img.shields.io/badge/Vercel-Em_breve-F2A93B?style=for-the-badge&logo=vercel&logoColor=14110E&labelColor=14110E)
 
-<sub>Uso interno do Komicho Bar. A versão na nuvem vai ao ar depois de ligar o Firebase (guia em <code>docs/deploy.md</code>).</sub>
+<sub>Uso interno do Komicho Bar: só a conta Google do dono entra. Publicação na Vercel em andamento.</sub>
 
 <br />
 
@@ -79,7 +79,7 @@ O diferencial está no acabamento. O visual segue o padrão dos melhores apps na
 - ↩️ **Desfazer** em tudo que apaga ou fecha
 - 🌙 **Tema claro, escuro ou automático**
 - 📲 **Instalável** no Android e no iPhone, abre sem internet e avisa quando há versão nova
-- 🔒 **Login Google** com lista de e-mails autorizados (na versão em nuvem)
+- 🔒 **Login só com Google**, liberado apenas para a conta do dono (app e regras do banco)
 
 <br />
 
@@ -90,8 +90,8 @@ O diferencial está no acabamento. O visual segue o padrão dos melhores apps na
 | Interface | React 19 · TypeScript · Tailwind CSS v4 · Motion (animações) · Lucide (ícones) · fonte Geist |
 | Navegação | React Router 7 |
 | App instalável | vite-plugin-pwa (Workbox) · ícones gerados com @vite-pwa/assets-generator |
-| Dados | Firebase Firestore com cache offline persistente · modo local com localStorage |
-| Login | Firebase Auth (Google) + allowlist de e-mails |
+| Dados | Firebase Firestore com cache offline persistente · modo demo com localStorage |
+| Login | Firebase Auth, só Google e só o e-mail do dono |
 | Build | Vite 8 (Rolldown) |
 | Hospedagem | Vercel (planejado) |
 
@@ -147,11 +147,11 @@ Detalhes em [`docs/arquitetura.md`](docs/arquitetura.md).
    ```bash
    npm run dev:demo
    ```
-3. Ou rode em **modo local** (cardápio de exemplo, dados salvos só no navegador):
+3. Ou rode o **app real** (Firebase, login com Google):
    ```bash
    npm run dev
    ```
-4. Para usar a **nuvem**, copie `.env.example` para `.env`, preencha com as chaves do Firebase e siga [`docs/deploy.md`](docs/deploy.md).
+4. Configuração do Firebase e da Vercel em [`docs/deploy.md`](docs/deploy.md).
 5. Build de produção:
    ```bash
    npm run build
@@ -165,7 +165,8 @@ Detalhes em [`docs/arquitetura.md`](docs/arquitetura.md).
 - [x] Fiado com histórico e pagamento parcial
 - [x] Balanço por dia, semana, mês e ano com gráfico
 - [x] Tema claro/escuro, PWA instalável e offline
-- [ ] Ligar o Firebase e publicar na Vercel
+- [x] Projeto Firebase e app web configurados
+- [ ] Ativar Firestore e login Google no console e publicar na Vercel
 - [ ] Cadastrar o cardápio real do bar
 - [ ] Acesso da segunda pessoa (celular da mãe)
 - [ ] Exportar o balanço do mês (PDF ou planilha)

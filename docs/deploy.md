@@ -1,55 +1,57 @@
 # Colocar no ar (Firebase + Vercel)
 
-Sem estes passos o app funciona em **modo local** (dados só no aparelho). Com eles, os dados ficam na nuvem, protegidos por login Google, e não se perdem se o celular for trocado.
+Projeto Firebase: **`komicho-ce5ba`** (conta danyy.jonathan@gmail.com). O login é **só com Google** e **só o e-mail `danyy.jonathan@gmail.com`** entra.
 
-## 1. Criar o projeto no Firebase
+## Já feito
 
-1. Acesse o [Console do Firebase](https://console.firebase.google.com) e crie um projeto (ex.: `komicho-bar`). O Google Analytics pode ficar desligado.
-2. **Authentication** → Começar → **Google** → ativar → salvar.
-3. **Firestore Database** → Criar banco → modo de produção → região `southamerica-east1` (São Paulo).
-4. **Configurações do projeto** → Seus apps → **Web** (`</>`) → registrar o app (sem Hosting) e copiar o objeto `firebaseConfig`.
+- [x] Projeto criado no Firebase.
+- [x] App web "Komicho Bar" registrado (config embutida em `src/lib/firebase.ts` e no `.env` local).
+- [x] `.firebaserc` apontando para `komicho-ce5ba`.
 
-## 2. Configurar as chaves
+## 1. Ativar no console (só pelo navegador, com a conta do Dany)
 
-1. Copie `.env.example` para `.env` e preencha com os valores do `firebaseConfig`.
-2. Em `VITE_ALLOWED_EMAILS`, coloque os e-mails Google que podem entrar, separados por vírgula.
-3. Rode `npm run dev` e teste o login em `http://localhost:5173` (o `localhost` já vem autorizado no Firebase).
+1. **Login com Google:** [Authentication → Método de login](https://console.firebase.google.com/project/komicho-ce5ba/authentication/providers) → **Google** → Ativar → escolher o e-mail de suporte → Salvar.
+2. **Banco de dados:** [Firestore Database](https://console.firebase.google.com/project/komicho-ce5ba/firestore) → **Criar banco de dados** → edição Standard → local `southamerica-east1 (São Paulo)` → **modo de produção** → Criar.
 
-## 3. Publicar as regras de segurança
+## 2. Publicar as regras de segurança
 
-As regras ficam em `firestore.rules`. Confira se a lista de e-mails lá é a mesma do `.env` e publique por um destes caminhos:
+Depois que o Firestore existir:
 
-- **Pelo console:** Firestore → Regras → colar o conteúdo de `firestore.rules` → Publicar.
-- **Pela linha de comando** (precisa do Firebase CLI instalado e logado):
-  ```bash
-  firebase deploy --only firestore:rules --project SEU_PROJECT_ID
-  ```
+```bash
+firebase deploy --only firestore:rules
+```
+
+As regras (`firestore.rules`) só deixam ler e gravar quem estiver logado com `danyy.jonathan@gmail.com` e com e-mail verificado.
+
+## 3. Testar local
+
+```bash
+npm run dev
+```
+
+Abra `http://localhost:5173` e entre com o Google (o `localhost` já vem autorizado no Firebase).
 
 ## 4. Publicar na Vercel
 
-1. Na [Vercel](https://vercel.com), **Add New → Project** e importe o repositório `komicho-bar`.
+1. Na [Vercel](https://vercel.com), **Add New → Project** e importe o repositório `Danyyks/komicho-bar`.
 2. Framework: **Vite** (detectado sozinho). Build: `npm run build`. Saída: `dist`.
-3. Em **Environment Variables**, cadastre as mesmas variáveis do `.env` (uma por uma, sem espaços nem quebras de linha).
-4. Deploy. O `vercel.json` já cuida das rotas do app e do cache do service worker.
+3. Variáveis de ambiente **não são obrigatórias**: a config pública já está no código. Se cadastrar, use as mesmas do `.env`.
+4. Deploy. O `vercel.json` cuida das rotas do app e do cache do service worker.
 
 ## 5. Autorizar o endereço no login
 
-No Firebase: **Authentication → Configurações → Domínios autorizados → Adicionar domínio** e cole o endereço da Vercel (ex.: `komicho-bar.vercel.app`). Sem isso, o login dá erro de "endereço não autorizado".
+[Authentication → Configurações → Domínios autorizados](https://console.firebase.google.com/project/komicho-ce5ba/authentication/settings) → **Adicionar domínio** → o endereço da Vercel (ex.: `komicho-bar.vercel.app`). Sem isso, o login mostra "endereço não autorizado".
 
 ## 6. Instalar no celular
 
-- **Android (Chrome/Samsung Internet):** abra o endereço → menu ⋮ → **Instalar app** (ou pelo botão em Produtos → Ajustes).
-- **iPhone (Safari):** abra o endereço → **Compartilhar** → **Adicionar à Tela de Início**.
+- **Android (Chrome/Samsung Internet):** abra o endereço → menu ⋮ → **Instalar app** (ou Produtos → Ajustes → Instalar).
+- **iPhone (Safari):** **Compartilhar** → **Adicionar à Tela de Início**.
 
-## Liberar outra pessoa (ex.: a mãe)
+## Liberar outra pessoa no futuro
 
-1. Adicione o e-mail Google dela em `firestore.rules` e publique as regras.
-2. Adicione o mesmo e-mail em `VITE_ALLOWED_EMAILS` na Vercel e faça um novo deploy.
+1. Adicione o e-mail em `firestore.rules` e rode `firebase deploy --only firestore:rules`.
+2. Adicione o mesmo e-mail em `RESERVA_EMAILS` (`src/lib/firebase.ts`), faça commit e push.
 
 ## Atualizações
 
 Cada `git push` na `main` gera um deploy novo na Vercel. Quem está com o app aberto vê o aviso **"Nova versão do app · Atualizar"**.
-
-## Dados do modo local
-
-Os dados usados em modo local (antes de ligar a nuvem) ficam no navegador e **não** sobem sozinhos para o Firebase. Se você usar o app de verdade antes de ligar a nuvem, avise antes de trocar, para migrarmos os dados.

@@ -11,18 +11,17 @@ Telas (pages/)  ──usam──▶  DadosContext (ações + listas)  ──usa�
 ```
 
 - **As telas nunca falam direto com o banco.** Elas leem listas e chamam ações do `useDados()` (`abrirComanda`, `fecharComanda`, `receberFiado`, `salvarLancamento`...).
-- **`repo.ts`** tem a mesma API para os dois armazenamentos. Quem decide qual usar é `lib/firebase.ts` (`nuvemLigada`).
+- **`repo.ts`** tem a mesma API para os dois armazenamentos. Quem decide qual usar é `lib/firebase.ts` (`nuvemLigada`: sempre ligada, menos no modo demo).
 - **Gravações compostas** (ex.: fechar conta = criar lançamento + apagar comanda) usam `gravarJuntos()`, que vira um `writeBatch` atômico no Firestore.
 
 ## Modos de funcionamento
 
 | Modo | Quando | Login | Onde ficam os dados |
 |---|---|---|---|
-| **Nuvem** | `.env` com as chaves do Firebase | Google + allowlist | Firestore (com cache offline no aparelho) |
-| **Local** | sem `.env` | nenhum | localStorage do navegador (prefixo `komicho:`) |
-| **Demo** | `npm run dev:demo` | nenhum | localStorage separado (prefixo `komicho-demo:`) com dados fictícios |
+| **Nuvem** | `npm run dev`, build e produção | Google, só `danyy.jonathan@gmail.com` | Firestore do projeto `komicho-ce5ba` (com cache offline no aparelho) |
+| **Demo** | `npm run dev:demo` | nenhum | localStorage (prefixo `komicho-demo:`) com dados fictícios |
 
-No modo local, a primeira abertura cria um **cardápio de exemplo**. No modo nuvem, a aba Produtos oferece "Usar cardápio de exemplo" se o cardápio estiver vazio.
+A config pública do Firebase fica embutida em `lib/firebase.ts` como reserva (o `.env` pode sobrescrever), então a Vercel não precisa de variáveis de ambiente. Com o cardápio vazio, a aba Produtos oferece "Usar cardápio de exemplo".
 
 ## Modelo de dados
 
@@ -73,4 +72,5 @@ Painéis (bottom sheets) não são rotas: são componentes `Sheet` abertos por e
 
 - A config web do Firebase é pública por natureza; a proteção real está em `firestore.rules` (allowlist de e-mails verificados) + domínios autorizados no Firebase Auth.
 - `.env` fica fora do Git (`.gitignore`). Só `.env.example` vai para o repositório.
-- A allowlist existe em **dois lugares** que precisam bater: `VITE_ALLOWED_EMAILS` (interface) e `firestore.rules` (proteção real).
+- A allowlist existe em **dois lugares** que precisam bater: `emailsPermitidos` em `lib/firebase.ts` (reserva fixa com o e-mail do Dany, ou `VITE_ALLOWED_EMAILS`) e `firestore.rules` (proteção real). A lista da interface **nunca fica vazia**: sem `.env`, vale a reserva.
+- O login pede sempre a escolha de conta (`prompt: select_account`) e qualquer conta fora da lista é deslogada na hora.
