@@ -10,9 +10,9 @@ App instalável (PWA) feito para o dia a dia de um bar de vila: abre comanda num
 
 <br />
 
-![Em breve](https://img.shields.io/badge/Vercel-Em_breve-F2A93B?style=for-the-badge&logo=vercel&logoColor=14110E&labelColor=14110E)
+[![No ar na Vercel](https://img.shields.io/badge/Vercel-No_ar-F2A93B?style=for-the-badge&logo=vercel&logoColor=14110E&labelColor=14110E)](https://komicho-bar.vercel.app)
 
-<sub>Uso interno do Komicho Bar: só a conta Google do dono entra. Publicação na Vercel em andamento.</sub>
+<sub>Uso interno do Komicho Bar: só a conta Google do dono entra.</sub>
 
 <br />
 
@@ -93,7 +93,7 @@ O diferencial está no acabamento. O visual segue o padrão dos melhores apps na
 | Dados | Firebase Firestore com cache offline persistente · modo demo com localStorage |
 | Login | Firebase Auth, só Google e só o e-mail do dono |
 | Build | Vite 8 (Rolldown) |
-| Hospedagem | Vercel (planejado) |
+| Hospedagem | Vercel (deploy automático a cada push na `main`) |
 
 <br />
 
@@ -166,7 +166,8 @@ Detalhes em [`docs/arquitetura.md`](docs/arquitetura.md).
 - [x] Balanço por dia, semana, mês e ano com gráfico
 - [x] Tema claro/escuro, PWA instalável e offline
 - [x] Projeto Firebase e app web configurados
-- [ ] Ativar Firestore e login Google no console e publicar na Vercel
+- [x] Firestore, login Google e regras de segurança no ar
+- [x] Publicado na Vercel ([komicho-bar.vercel.app](https://komicho-bar.vercel.app))
 - [ ] Cadastrar o cardápio real do bar
 - [ ] Acesso da segunda pessoa (celular da mãe)
 - [ ] Exportar o balanço do mês (PDF ou planilha)

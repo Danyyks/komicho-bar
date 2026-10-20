@@ -35,4 +35,5 @@ npm run icones     # regenera os ícones do PWA a partir de public/favicon.svg
 - CSS próprio fora de `@layer base`/`@utility` vence as classes do Tailwind.
 - Login **só com Google e só `danyy.jonathan@gmail.com`** (ID `NNFz46NJz2gyNk5mujUb3D2MEIh2`): `firestore.rules` exige ID + e-mail verificado; a interface usa `RESERVA_EMAILS`/`VITE_ALLOWED_EMAILS` (`src/lib/firebase.ts`). Nunca deixar a lista vazia. Mudou as regras? `firebase deploy --only firestore:rules`.
 - Firebase CLI já logado na conta do Dany; `.firebaserc` aponta para `komicho-ce5ba`.
+- Produção: **https://komicho-bar.vercel.app** (projeto Vercel `komicho-bar`, ligado ao GitHub: push na `main` = deploy). O domínio precisa estar em Authentication → Domínios autorizados do Firebase.
 - O Git do projeto é **isolado nesta pasta** (a home `C:\Users\danyy` também é um repositório; nunca commitar lá).

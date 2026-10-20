@@ -8,6 +8,8 @@ Projeto Firebase: **`komicho-ce5ba`** (conta danyy.jonathan@gmail.com). O login 
 - [x] App web "Komicho Bar" registrado (config embutida em `src/lib/firebase.ts` e no `.env` local).
 - [x] `.firebaserc` apontando para `komicho-ce5ba`.
 - [x] Login com Google ativado e Firestore criado (Standard, `southamerica-east1`, modo de produção).
+- [x] Login testado: Google vinculado à conta, e-mail verificado, login por e-mail/senha desativado.
+- [x] Vercel: projeto `komicho-bar` ligado ao GitHub (push na `main` publica sozinho) em **https://komicho-bar.vercel.app**.
 - [x] Regras publicadas: só o ID `NNFz46NJz2gyNk5mujUb3D2MEIh2` com o e-mail `danyy.jonathan@gmail.com` verificado lê e grava. Acesso sem login testado: `PERMISSION_DENIED`.
 
 ## 1. Ativar no console (só pelo navegador, com a conta do Dany)
@@ -35,12 +37,16 @@ npm run dev
 
 Abra `http://localhost:5173` e entre com o Google (o `localhost` já vem autorizado no Firebase).
 
-## 4. Publicar na Vercel
+## 4. Publicar na Vercel (feito)
 
-1. Na [Vercel](https://vercel.com), **Add New → Project** e importe o repositório `Danyyks/komicho-bar`.
-2. Framework: **Vite** (detectado sozinho). Build: `npm run build`. Saída: `dist`.
-3. Variáveis de ambiente **não são obrigatórias**: a config pública já está no código. Se cadastrar, use as mesmas do `.env`.
-4. Deploy. O `vercel.json` cuida das rotas do app e do cache do service worker.
+O projeto foi criado pela CLI (`vercel link --project komicho-bar` + `vercel git connect`), então cada push na `main` publica sozinho. Para publicar na mão:
+
+```bash
+vercel --prod
+```
+
+- Variáveis de ambiente **não são necessárias**: a config pública já está no código.
+- O `vercel.json` define o build, manda toda rota para o `index.html` (o app cuida das telas), deixa `sw.js` e o manifesto sem cache (para as atualizações chegarem) e põe cache longo em `/assets`.
 
 ## 5. Autorizar o endereço no login
 
