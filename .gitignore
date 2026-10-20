@@ -1,0 +1,21 @@
+# Dependências e build
+node_modules
+dist
+dev-dist
+*.tsbuildinfo
+
+# Segredos: chaves do Firebase e lista de e-mails ficam só no .env local e na Vercel
+.env
+.env.*
+!.env.example
+
+# Firebase CLI
+.firebase
+*-debug.log
+
+# Sistema / editor
+.DS_Store
+Thumbs.db
+.vscode/*
+!.vscode/extensions.json
+.idea

@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <!-- viewport-fit=cover libera a área do recorte da câmera (o app usa as safe areas no CSS);
+         interactive-widget faz o teclado do Android empurrar os painéis para cima -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, interactive-widget=resizes-content" />
+    <title>Komicho Bar</title>
+    <meta name="description" content="Comandas, fiado e balanço do Komicho Bar." />
+
+    <!-- Ícones (gerados por `npm run icones`) -->
+    <link rel="icon" href="/favicon.ico" sizes="48x48" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon-180x180.png" />
+
+    <!-- Cor da barra do sistema: acompanha o tema claro/escuro -->
+    <meta name="theme-color" content="#F6F3EF" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#14110E" media="(prefers-color-scheme: dark)" />
+
+    <!-- iPhone: abre em tela cheia ao instalar pela tela de início -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="Komicho" />
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

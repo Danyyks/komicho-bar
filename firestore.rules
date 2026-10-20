@@ -1,0 +1,24 @@
+rules_version = '2';
+
+// Regras de segurança do Firestore do Komicho Bar.
+// Só as contas Google da lista abaixo podem ler ou gravar qualquer dado.
+// Para liberar outra pessoa (ex.: sua mãe), adicione o e-mail dela aqui
+// E também em VITE_ALLOWED_EMAILS (.env e Vercel), e publique as regras.
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Confere se quem está logado tem e-mail verificado e está na lista
+    function autorizado() {
+      return request.auth != null
+        && request.auth.token.email_verified == true
+        && request.auth.token.email in [
+          'danyy.jonathan@gmail.com'
+        ];
+    }
+
+    // Todas as coleções (produtos, comandas, clientes, fiado, lancamentos)
+    match /{documento=**} {
+      allow read, write: if autorizado();
+    }
+  }
+}

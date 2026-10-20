@@ -1,0 +1,129 @@
+/* Estilos globais: fonte, tokens de cor (claro/escuro) e ajustes de "app nativo". */
+@import "tailwindcss";
+@import "@fontsource-variable/geist";
+
+/* Modo escuro controlado pela classe .dark no <html> (definida pelo TemaContext) */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* Tokens do Tailwind apontando para variáveis CSS que mudam com o tema */
+@theme {
+  --font-sans: "Geist Variable", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+
+  --color-fundo: var(--k-fundo);
+  --color-superficie: var(--k-superficie);
+  --color-elevado: var(--k-elevado);
+  --color-linha: var(--k-linha);
+  --color-texto: var(--k-texto);
+  --color-texto-2: var(--k-texto-2);
+  --color-texto-3: var(--k-texto-3);
+  --color-marca: var(--k-marca);
+  --color-marca-forte: var(--k-marca-forte);
+  --color-sobre-marca: var(--k-sobre-marca);
+  --color-marca-suave: var(--k-marca-suave);
+  --color-marca-tinta: var(--k-marca-tinta);
+  --color-positivo: var(--k-positivo);
+  --color-positivo-suave: var(--k-positivo-suave);
+  --color-negativo: var(--k-negativo);
+  --color-negativo-suave: var(--k-negativo-suave);
+
+  --shadow-cartao: var(--k-sombra-cartao);
+  --shadow-flutuante: var(--k-sombra-flutuante);
+
+  --ease-mola: cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+/* Paleta clara: off-white quente + âmbar de cerveja */
+:root {
+  --k-fundo: #f6f3ef;
+  --k-superficie: #ffffff;
+  --k-elevado: #efebe5;
+  --k-linha: rgb(20 17 14 / 0.08);
+  --k-texto: #1a1612;
+  --k-texto-2: #6e655c;
+  --k-texto-3: #a39a90;
+  --k-marca: #f2a93b;
+  --k-marca-forte: #d98a1c;
+  --k-sobre-marca: #241604;
+  --k-marca-suave: #fcebd0;
+  --k-marca-tinta: #8a520c;
+  --k-positivo: #1d8a4b;
+  --k-positivo-suave: #ddf2e5;
+  --k-negativo: #d14343;
+  --k-negativo-suave: #fbe3e1;
+  --k-sombra-cartao: 0 1px 2px rgb(20 17 14 / 0.04), 0 6px 20px rgb(20 17 14 / 0.05);
+  --k-sombra-flutuante: 0 10px 40px rgb(20 17 14 / 0.16), 0 2px 8px rgb(20 17 14 / 0.06);
+  color-scheme: light;
+}
+
+/* Paleta escura: café torrado, pensada para usar à noite no bar */
+.dark {
+  --k-fundo: #14110e;
+  --k-superficie: #1e1a16;
+  --k-elevado: #2a251f;
+  --k-linha: rgb(255 240 220 / 0.08);
+  --k-texto: #f5f0ea;
+  --k-texto-2: #a89e92;
+  --k-texto-3: #6f665c;
+  --k-marca: #f5b04a;
+  --k-marca-forte: #f2a93b;
+  --k-sobre-marca: #241604;
+  --k-marca-suave: rgb(245 176 74 / 0.14);
+  --k-marca-tinta: #f7c06e;
+  --k-positivo: #4cc97e;
+  --k-positivo-suave: rgb(76 201 126 / 0.14);
+  --k-negativo: #ff7a6e;
+  --k-negativo-suave: rgb(255 122 110 / 0.14);
+  --k-sombra-cartao: 0 0 0 1px rgb(255 240 220 / 0.05);
+  --k-sombra-flutuante: 0 10px 40px rgb(0 0 0 / 0.5), 0 0 0 1px rgb(255 240 220 / 0.06);
+  color-scheme: dark;
+}
+
+/* Regras base dentro de @layer base: assim as classes do Tailwind conseguem sobrescrever */
+@layer base {
+  /* Base: comportamento de app (sem "puxar" a página, sem destaque azul no toque) */
+  html,
+  body {
+    background: var(--k-fundo);
+    color: var(--k-texto);
+    overscroll-behavior: none;
+    -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    font-size: 17px;
+    line-height: 1.4;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Botões não selecionam texto e respondem rápido ao toque (sem atraso de duplo toque) */
+  button,
+  a,
+  [role="button"] {
+    -webkit-user-select: none;
+    user-select: none;
+    touch-action: manipulation;
+  }
+
+  /* Campos com 16px+ evitam o zoom automático do iPhone ao focar */
+  input,
+  textarea,
+  select {
+    font-size: max(16px, 1em);
+  }
+}
+
+/* Números alinhados (valores em dinheiro não "pulam" ao mudar) */
+@utility num {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Esconde a barra de rolagem em listas horizontais (chips de categoria) */
+@utility sem-barra {
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
