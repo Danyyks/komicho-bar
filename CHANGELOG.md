@@ -7,6 +7,7 @@ Mudanças do Komicho Bar, da mais recente para a mais antiga.
 - Firebase ligado ao projeto `komicho-ce5ba` (config pública embutida, `.firebaserc`).
 - Login só com Google e só `danyy.jonathan@gmail.com`; a lista de permitidos nunca fica vazia.
 - Escolha de conta Google sempre aparece ao entrar.
+- Regras do Firestore publicadas: exigem o ID da conta do dono e o e-mail verificado.
 - O app real sempre usa a nuvem; o armazenamento local ficou só para o modo demo.
 
 ## 0.1.0 — 20/10/2026

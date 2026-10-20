@@ -70,7 +70,7 @@ Painéis (bottom sheets) não são rotas: são componentes `Sheet` abertos por e
 
 ## Segurança
 
-- A config web do Firebase é pública por natureza; a proteção real está em `firestore.rules` (allowlist de e-mails verificados) + domínios autorizados no Firebase Auth.
+- A config web do Firebase é pública por natureza; a proteção real está em `firestore.rules` (ID do usuário **e** e-mail verificado do dono) + domínios autorizados no Firebase Auth.
 - `.env` fica fora do Git (`.gitignore`). Só `.env.example` vai para o repositório.
 - A allowlist existe em **dois lugares** que precisam bater: `emailsPermitidos` em `lib/firebase.ts` (reserva fixa com o e-mail do Dany, ou `VITE_ALLOWED_EMAILS`) e `firestore.rules` (proteção real). A lista da interface **nunca fica vazia**: sem `.env`, vale a reserva.
 - O login pede sempre a escolha de conta (`prompt: select_account`) e qualquer conta fora da lista é deslogada na hora.

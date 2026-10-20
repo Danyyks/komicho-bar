@@ -33,6 +33,6 @@ npm run icones     # regenera os ícones do PWA a partir de public/favicon.svg
 
 - Elementos `fixed` dentro da tela animada quebram: use portal (como `Sheet` e `BotaoFlutuante`).
 - CSS próprio fora de `@layer base`/`@utility` vence as classes do Tailwind.
-- Login **só com Google e só `danyy.jonathan@gmail.com`**: a lista precisa bater em `firestore.rules` e `RESERVA_EMAILS`/`VITE_ALLOWED_EMAILS` (`src/lib/firebase.ts`). Nunca deixar a lista vazia.
+- Login **só com Google e só `danyy.jonathan@gmail.com`** (ID `NNFz46NJz2gyNk5mujUb3D2MEIh2`): `firestore.rules` exige ID + e-mail verificado; a interface usa `RESERVA_EMAILS`/`VITE_ALLOWED_EMAILS` (`src/lib/firebase.ts`). Nunca deixar a lista vazia. Mudou as regras? `firebase deploy --only firestore:rules`.
 - Firebase CLI já logado na conta do Dany; `.firebaserc` aponta para `komicho-ce5ba`.
 - O Git do projeto é **isolado nesta pasta** (a home `C:\Users\danyy` também é um repositório; nunca commitar lá).

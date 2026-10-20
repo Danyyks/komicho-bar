@@ -7,6 +7,8 @@ Projeto Firebase: **`komicho-ce5ba`** (conta danyy.jonathan@gmail.com). O login 
 - [x] Projeto criado no Firebase.
 - [x] App web "Komicho Bar" registrado (config embutida em `src/lib/firebase.ts` e no `.env` local).
 - [x] `.firebaserc` apontando para `komicho-ce5ba`.
+- [x] Login com Google ativado e Firestore criado (Standard, `southamerica-east1`, modo de produção).
+- [x] Regras publicadas: só o ID `NNFz46NJz2gyNk5mujUb3D2MEIh2` com o e-mail `danyy.jonathan@gmail.com` verificado lê e grava. Acesso sem login testado: `PERMISSION_DENIED`.
 
 ## 1. Ativar no console (só pelo navegador, com a conta do Dany)
 
@@ -21,7 +23,9 @@ Depois que o Firestore existir:
 firebase deploy --only firestore:rules
 ```
 
-As regras (`firestore.rules`) só deixam ler e gravar quem estiver logado com `danyy.jonathan@gmail.com` e com e-mail verificado.
+As regras (`firestore.rules`) só deixam ler e gravar a conta com o ID do Dany **e** o e-mail `danyy.jonathan@gmail.com` verificado.
+
+**Só Google:** em [Authentication → Método de login](https://console.firebase.google.com/project/komicho-ce5ba/authentication/providers), deixe ativo apenas o **Google** (desative "E-mail/senha" e qualquer outro).
 
 ## 3. Testar local
 
@@ -49,8 +53,9 @@ Abra `http://localhost:5173` e entre com o Google (o `localhost` já vem autoriz
 
 ## Liberar outra pessoa no futuro
 
-1. Adicione o e-mail em `firestore.rules` e rode `firebase deploy --only firestore:rules`.
-2. Adicione o mesmo e-mail em `RESERVA_EMAILS` (`src/lib/firebase.ts`), faça commit e push.
+1. A pessoa entra uma vez com o Google (vai ver "sem acesso"); pegue o ID dela em Authentication → Usuários.
+2. Adicione o ID e o e-mail em `firestore.rules` e rode `firebase deploy --only firestore:rules`.
+3. Adicione o mesmo e-mail em `RESERVA_EMAILS` (`src/lib/firebase.ts`), faça commit e push.
 
 ## Atualizações
 
