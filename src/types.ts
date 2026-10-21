@@ -7,19 +7,9 @@ export interface Entidade {
   criadoEm: number; // data de criação (timestamp em ms)
 }
 
-/** Categorias fixas do cardápio (fixas para manter o app simples). */
-export const CATEGORIAS_PRODUTO = ["Cervejas", "Destilados", "Sem álcool", "Petiscos", "Diversos"] as const;
-export type CategoriaProduto = (typeof CATEGORIAS_PRODUTO)[number];
-
-/** Item do cardápio. */
-export interface Produto extends Entidade {
-  nome: string;
-  preco: number; // centavos
-  categoria: CategoriaProduto;
-}
-
-/** Linha de uma comanda. Guarda nome e preço do momento da venda:
- * mudar o preço do produto depois não altera vendas antigas. */
+/** Linha de uma comanda: nome e preço digitados na hora (não há cadastro de produtos).
+ * O campo `produtoId` é só o id da linha; o nome ficou do tempo em que havia cardápio
+ * e foi mantido para não quebrar comandas, vendas e fiado já salvos. */
 export interface ItemComanda {
   produtoId: string;
   nome: string;

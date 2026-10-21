@@ -3,7 +3,7 @@
 import { createContext, useContext, useEffect, useRef, useState, type ReactNode } from "react";
 import { colecaoLocalVazia, criarRepo, gravarJuntos, type Operacao } from "@/lib/repo";
 import { nuvemLigada } from "@/lib/firebase";
-import { cardapioExemplo, dadosDemo } from "@/lib/seed";
+import { dadosDemo } from "@/lib/seed";
 import { totalItens } from "@/lib/dinheiro";
 import { uid } from "@/lib/utils";
 import type {
@@ -14,12 +14,10 @@ import type {
   FormaPagamento,
   Lancamento,
   MovimentoFiado,
-  Produto,
 } from "@/types";
 
 // Um repositório por coleção do banco
 const repos = {
-  produtos: criarRepo<Produto>("produtos"),
   comandas: criarRepo<Comanda>("comandas"),
   clientes: criarRepo<Cliente>("clientes"),
   fiado: criarRepo<MovimentoFiado>("fiado"),
@@ -27,13 +25,15 @@ const repos = {
 };
 
 /** Como a conta foi paga ao fechar uma comanda. */
+/** O que basta para somar um item numa comanda: id da linha, nome e preço. */
+export type ItemBase = { id: string; nome: string; preco: number };
+
 export type Pagamento = { forma: FormaPagamento } | { fiado: string /* clienteId */ };
 
 /** Função devolvida pelas ações que apagam algo: chamada pelo botão "Desfazer". */
 export type Desfazer = () => void;
 
 function useDadosInterno() {
-  const [produtos, setProdutos] = useState<Produto[]>([]);
   const [comandas, setComandas] = useState<Comanda[]>([]);
   const [clientes, setClientes] = useState<Cliente[]>([]);
   const [fiado, setFiado] = useState<MovimentoFiado[]>([]);
@@ -44,7 +44,7 @@ function useDadosInterno() {
 
   // Primeira abertura do modo demo: cria o banco fictício inteiro no aparelho
   useEffect(() => {
-    if (nuvemLigada || !colecaoLocalVazia("produtos")) return;
+    if (nuvemLigada || !colecaoLocalVazia("lancamentos")) return;
     const ops: Operacao[] = [];
     for (const [colecao, itens] of Object.entries(dadosDemo())) {
       for (const item of itens as Entidade[]) ops.push({ tipo: "set", colecao, item });
@@ -63,10 +63,6 @@ function useDadosInterno() {
       if (responderam.size === Object.keys(repos).length) setCarregado(true);
     };
     const parar = [
-      repos.produtos.assinar((p) => {
-        setProdutos(p.sort((a, b) => a.criadoEm - b.criadoEm));
-        marcar("produtos");
-      }),
       repos.comandas.assinar((c) => {
         const ordenadas = c.sort((a, b) => a.criadoEm - b.criadoEm);
         comandasRef.current = ordenadas;
@@ -89,39 +85,24 @@ function useDadosInterno() {
     return () => parar.forEach((fn) => fn());
   }, []);
 
-  // ---------- Produtos ----------
-
-  const salvarProduto = (p: Omit<Produto, "id" | "criadoEm"> & { id?: string }) => {
-    if (p.id) repos.produtos.atualizar(p.id, p);
-    else repos.produtos.criar(p);
-  };
-
-  const removerProduto = (p: Produto): Desfazer => {
-    repos.produtos.remover(p.id);
-    return () => repos.produtos.salvar(p);
-  };
-
-  const usarCardapioExemplo = () =>
-    gravarJuntos(cardapioExemplo().map((item) => ({ tipo: "set", colecao: "produtos", item })));
-
   // ---------- Comandas ----------
 
   const abrirComanda = (nome: string): Comanda => repos.comandas.criar({ nome: nome.trim(), itens: [] });
 
   const renomearComanda = (id: string, nome: string) => repos.comandas.atualizar(id, { nome: nome.trim() });
 
-  /** Soma (+1) ou tira (-1) um produto da comanda; com zero, o item sai da lista. */
-  const mudarQtd = (comandaId: string, produto: Pick<Produto, "id" | "nome" | "preco">, delta: number) => {
+  /** Soma (ou tira, com delta negativo) um item da comanda; com zero, o item sai da lista. */
+  const mudarQtd = (comandaId: string, item: ItemBase, delta: number) => {
     // Usa a versão mais recente (ref) para não perder toques rápidos seguidos
     const comanda = comandasRef.current.find((c) => c.id === comandaId);
     if (!comanda) return;
-    const existente = comanda.itens.find((i) => i.produtoId === produto.id);
+    const existente = comanda.itens.find((i) => i.produtoId === item.id);
     const itens = existente
       ? comanda.itens
-          .map((i) => (i.produtoId === produto.id ? { ...i, qtd: i.qtd + delta } : i))
+          .map((i) => (i.produtoId === item.id ? { ...i, qtd: i.qtd + delta } : i))
           .filter((i) => i.qtd > 0)
       : delta > 0
-        ? [...comanda.itens, { produtoId: produto.id, nome: produto.nome, preco: produto.preco, qtd: delta }]
+        ? [...comanda.itens, { produtoId: item.id, nome: item.nome, preco: item.preco, qtd: delta }]
         : comanda.itens;
     comandasRef.current = comandasRef.current.map((c) => (c.id === comandaId ? { ...c, itens } : c));
     repos.comandas.atualizar(comandaId, { itens });
@@ -236,14 +217,10 @@ function useDadosInterno() {
 
   return {
     carregado,
-    produtos,
     comandas,
     clientes,
     fiado,
     lancamentos,
-    salvarProduto,
-    removerProduto,
-    usarCardapioExemplo,
     abrirComanda,
     renomearComanda,
     mudarQtd,

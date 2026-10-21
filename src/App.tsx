@@ -11,7 +11,6 @@ import { ComandaDetalhe } from "@/pages/ComandaDetalhe";
 import { Fiado } from "@/pages/Fiado";
 import { ClienteDetalhe } from "@/pages/ClienteDetalhe";
 import { Balanco } from "@/pages/Balanco";
-import { Produtos } from "@/pages/Produtos";
 import { Login } from "@/pages/Login";
 
 export default function App() {
@@ -45,7 +44,6 @@ function Portao() {
           <Route path="fiado" element={<Fiado />} />
           <Route path="fiado/:id" element={<ClienteDetalhe />} />
           <Route path="balanco" element={<Balanco />} />
-          <Route path="produtos" element={<Produtos />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Route>
       </Routes>

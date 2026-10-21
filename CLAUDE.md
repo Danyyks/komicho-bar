@@ -14,7 +14,7 @@ npm run icones     # regenera os ícones do PWA a partir de public/favicon.svg
 ## Regras do projeto
 
 - **É um caderninho, não um sistema:** o app só substitui o papel (comanda, caixa entrou/saiu, fiado). Um funcionário mais velho usa: poucos toques, botões grandes com palavras, teclado de calculadora, cores pastel. Ver "Princípio do redesign" em `docs/arquitetura.md` antes de criar qualquer tela.
-- **Escopo do MVP fechado:** Comandas, Fiado, Balanço, Produtos. **Fora:** WhatsApp, QR Code Pix (a maquininha já faz), impressão, página do cliente e **controle de estoque** (o Balanço é só dinheiro: vendido × comprado).
+- **Escopo fechado:** Hoje (comandas + entrou/saiu), Fiado e Balanço. **Fora:** cadastro de produtos/cardápio (removido na v0.4: itens são digitados na hora), WhatsApp, QR Code Pix (a maquininha já faz), impressão, página do cliente e **controle de estoque** (o Balanço é só dinheiro: vendido × comprado).
 - **Dinheiro sempre em centavos** (inteiro). Formatar só na tela com `reais()`.
 - **Comentários curtos em PT-BR em cada bloco**, seguindo [`docs/padroes.md`](docs/padroes.md).
 - **Design nível app nativo** (Apple/Google): usar os componentes de `src/components/ui.tsx` e os tokens de cor de `src/index.css`. Sem emoji na interface (ícones Lucide).

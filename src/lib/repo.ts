@@ -42,7 +42,7 @@ function escreverLocal<T>(colecao: string, itens: T[]) {
 
 // ---------- API pública ----------
 
-/** Cria o repositório de uma coleção (ex.: "produtos"). */
+/** Cria o repositório de uma coleção (ex.: "comandas"). */
 export function criarRepo<T extends Entidade>(colecao: string) {
   /** Escuta a coleção em tempo real; devolve a função para parar de escutar. */
   function assinar(cb: (itens: T[]) => void): () => void {
@@ -143,7 +143,7 @@ function limparUndefined<T extends object>(obj: T): T {
   return Object.fromEntries(Object.entries(obj).filter(([, v]) => v !== undefined)) as T;
 }
 
-/** Diz se a coleção local ainda está vazia (usado para criar o cardápio inicial). */
+/** Diz se a coleção local ainda está vazia (usado para criar os dados do modo demo). */
 export function colecaoLocalVazia(colecao: string): boolean {
   return localStorage.getItem(PREFIXO + colecao) === null;
 }

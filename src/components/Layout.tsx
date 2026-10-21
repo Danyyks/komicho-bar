@@ -2,7 +2,7 @@
 import { useEffect } from "react";
 import { NavLink, Outlet, useLocation } from "react-router-dom";
 import { motion } from "motion/react";
-import { BookUser, ChartNoAxesColumn, Beer, House, type LucideIcon } from "lucide-react";
+import { BookUser, ChartNoAxesColumn, House, type LucideIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { UpdatePrompt } from "./UpdatePrompt";
 
@@ -10,7 +10,6 @@ const ABAS: { para: string; rotulo: string; icone: LucideIcon }[] = [
   { para: "/", rotulo: "Hoje", icone: House },
   { para: "/fiado", rotulo: "Fiado", icone: BookUser },
   { para: "/balanco", rotulo: "Balanço", icone: ChartNoAxesColumn },
-  { para: "/produtos", rotulo: "Produtos", icone: Beer },
 ];
 
 export function Layout() {
@@ -46,7 +45,7 @@ export function Layout() {
 function BarraAbas() {
   return (
     <nav className="fixed inset-x-0 bottom-0 z-40 border-t border-linha bg-fundo/85 pb-[env(safe-area-inset-bottom)] backdrop-blur-xl">
-      <div className="mx-auto grid h-[72px] max-w-lg grid-cols-4">
+      <div className="mx-auto grid h-[72px] max-w-lg grid-cols-3">
         {ABAS.map(({ para, rotulo, icone: Icone }) => (
           <NavLink key={para} to={para} end={para === "/"} replace className="flex flex-col items-center justify-center gap-1">
             {({ isActive }) => (

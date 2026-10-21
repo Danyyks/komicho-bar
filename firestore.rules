@@ -27,7 +27,7 @@ service cloud.firestore {
       return request.auth != null && idAutorizado() && emailAutorizado();
     }
 
-    // Todas as coleções (produtos, comandas, clientes, fiado, lancamentos)
+    // Todas as coleções (comandas, clientes, fiado, lancamentos)
     match /{documento=**} {
       allow read, write: if autorizado();
     }

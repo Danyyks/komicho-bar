@@ -1,6 +1,6 @@
-// Comanda aberta: o que o cliente pediu (substitui a comanda de papel), os produtos para
-// somar e, no rodapé, "Pagou como?": Pix e Cartão fecham com um toque.
-import { useEffect, useMemo, useState } from "react";
+// Comanda aberta: o que o cliente pediu (substitui a comanda de papel). Cada item é
+// digitado na hora (nome, valor e quantidade); no rodapé, "Pagou como?" fecha a conta.
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { AnimatePresence, motion } from "motion/react";
 import { Banknote, BookUser, CreditCard, Minus, Pencil, Plus, QrCode } from "lucide-react";
@@ -10,12 +10,12 @@ import { CabecalhoDetalhe } from "@/components/Cabecalho";
 import { Confirmar } from "@/components/Confirmar";
 import { Sheet } from "@/components/Sheet";
 import { TecladoValor } from "@/components/Teclado";
-import { Botao, BotaoEscolha, Campo, Cartao, TituloSecao } from "@/components/ui";
+import { Botao, BotaoEscolha, BotaoGrande, Campo, Cartao } from "@/components/ui";
 import { reais, totalItens } from "@/lib/dinheiro";
 import { haQuantoTempo } from "@/lib/datas";
-import { cn, uid, vibrar } from "@/lib/utils";
+import { uid, vibrar } from "@/lib/utils";
 import { useVoltar } from "@/hooks/useVoltar";
-import { CATEGORIAS_PRODUTO, type Comanda, type Produto } from "@/types";
+import type { Comanda } from "@/types";
 import { AjustarValor, PagarDinheiro, PendurarFiado } from "./FecharConta";
 
 export function ComandaDetalhe() {
@@ -25,7 +25,7 @@ export function ComandaDetalhe() {
   const voltar = useVoltar("/");
   const comanda = comandas.find((c) => c.id === id);
 
-  const [painel, setPainel] = useState<"renomear" | "cancelar" | "dinheiro" | "fiado" | "ajuste" | null>(null);
+  const [painel, setPainel] = useState<"item" | "renomear" | "cancelar" | "dinheiro" | "fiado" | "ajuste" | null>(null);
   const [ajustado, setAjustado] = useState<number | null>(null); // valor com desconto (null = total)
   const [saindo, setSaindo] = useState(false);
 
@@ -67,7 +67,11 @@ export function ComandaDetalhe() {
       <p className="px-1 text-[15px] text-texto-2">Aberta {haQuantoTempo(comanda.criadoEm)}</p>
 
       <ListaItens comanda={comanda} />
-      <GradeProdutos comanda={comanda} />
+
+      {/* Anotar um item: nome, valor e quantidade digitados na hora */}
+      <div className="mt-4">
+        <BotaoGrande cor="marca" icone={Plus} titulo="Adicionar item" detalhe="Nome, valor e quantidade" onClick={() => setPainel("item")} />
+      </div>
 
       {/* Cancelar fica no fim da página, escrito por extenso (nada de ícone solto) */}
       <button onClick={() => setPainel("cancelar")} className="mt-8 h-12 w-full rounded-2xl text-[16px] font-semibold text-negativo active:bg-negativo-suave">
@@ -102,6 +106,7 @@ export function ComandaDetalhe() {
         </div>
       </div>
 
+      <NovoItem comanda={comanda} aberto={painel === "item"} onFechar={() => setPainel(null)} />
       <Renomear comanda={comanda} aberto={painel === "renomear"} onFechar={() => setPainel(null)} />
       <PagarDinheiro aberto={painel === "dinheiro"} onFechar={() => setPainel(null)} valor={cobrar} nome={comanda.nome} fechar={fechar} />
       <PendurarFiado aberto={painel === "fiado"} onFechar={() => setPainel(null)} valor={cobrar} nome={comanda.nome} fechar={fechar} />
@@ -130,7 +135,7 @@ function ListaItens({ comanda }: { comanda: Comanda }) {
   if (comanda.itens.length === 0) {
     return (
       <div className="mt-5 rounded-3xl border-2 border-dashed border-linha px-6 py-7 text-center text-[16px] text-texto-2">
-        Toque nos produtos abaixo para anotar o que o cliente pediu.
+        Nada anotado ainda. Toque em Adicionar item.
       </div>
     );
   }
@@ -185,105 +190,8 @@ function ListaItens({ comanda }: { comanda: Comanda }) {
   );
 }
 
-/** Produtos para tocar e somar: "Mais pedidos" primeiro e depois cada categoria,
- * tudo em lista para baixo (sem rolar para o lado, como um cardápio de papel). */
-function GradeProdutos({ comanda }: { comanda: Comanda }) {
-  const { produtos, lancamentos, fiado } = useDados();
-  const [avulso, setAvulso] = useState(false);
-
-  // Os 6 produtos que mais saíram nas comandas já fechadas (pagas ou penduradas)
-  const maisPedidos = useMemo(() => {
-    const contagem = new Map<string, number>();
-    for (const registro of [...lancamentos, ...fiado]) {
-      for (const i of registro.itens ?? []) contagem.set(i.produtoId, (contagem.get(i.produtoId) ?? 0) + i.qtd);
-    }
-    return produtos
-      .filter((p) => contagem.has(p.id))
-      .sort((a, b) => (contagem.get(b.id) ?? 0) - (contagem.get(a.id) ?? 0))
-      .slice(0, 6);
-  }, [produtos, lancamentos, fiado]);
-
-  // Quantas unidades de cada produto já estão na comanda (bolinha no canto do botão)
-  const naComanda = new Map(comanda.itens.map((i) => [i.produtoId, i.qtd]));
-
-  const botaoAvulso = (
-    <button
-      onClick={() => setAvulso(true)}
-      className="flex h-11 items-center gap-1.5 rounded-full bg-marca-suave pr-4 pl-3 text-[16px] font-semibold text-marca-tinta active:scale-95"
-    >
-      <Plus className="size-5" strokeWidth={2.6} /> Outro item
-    </button>
-  );
-
-  return (
-    <>
-      <TituloSecao acao={botaoAvulso}>Adicionar</TituloSecao>
-      {produtos.length === 0 && <p className="mt-2 text-center text-[16px] text-texto-2">Use Outro item ou cadastre produtos na aba Produtos.</p>}
-
-      {/* Mais pedidos (só aparece depois de algumas vendas) */}
-      {maisPedidos.length >= 3 && <GrupoProdutos titulo="Mais pedidos" produtos={maisPedidos} comanda={comanda} naComanda={naComanda} />}
-
-      {/* Cardápio completo por categoria */}
-      {CATEGORIAS_PRODUTO.map((cat) => {
-        const daCategoria = produtos.filter((p) => p.categoria === cat);
-        return daCategoria.length ? <GrupoProdutos key={cat} titulo={cat} produtos={daCategoria} comanda={comanda} naComanda={naComanda} /> : null;
-      })}
-
-      <ItemAvulso comanda={comanda} aberto={avulso} onFechar={() => setAvulso(false)} />
-    </>
-  );
-}
-
-/** Um bloco do cardápio: subtítulo + botões grandes de produto em 2 colunas. */
-function GrupoProdutos({ titulo, produtos, comanda, naComanda }: { titulo: string; produtos: Produto[]; comanda: Comanda; naComanda: Map<string, number> }) {
-  const { mudarQtd } = useDados();
-  return (
-    <section>
-      <h3 className="mt-5 mb-2.5 px-1 text-[16px] font-bold text-texto-2">{titulo}</h3>
-      <div className="grid grid-cols-2 gap-3">
-        {produtos.map((p) => {
-          const qtd = naComanda.get(p.id) ?? 0;
-          return (
-            <motion.button
-              key={p.id}
-              whileTap={{ scale: 0.95 }}
-              transition={{ type: "spring", stiffness: 600, damping: 30 }}
-              onClick={() => {
-                vibrar();
-                mudarQtd(comanda.id, p, +1);
-              }}
-              className={cn(
-                "relative flex min-h-[88px] flex-col justify-between rounded-3xl p-4 text-left shadow-cartao transition-colors",
-                qtd > 0 ? "bg-marca-suave" : "bg-superficie",
-              )}
-            >
-              <span className="line-clamp-2 pr-7 text-[17px] leading-snug font-semibold">{p.nome}</span>
-              <span className="num mt-2 text-[16px] font-medium text-texto-2">{reais(p.preco)}</span>
-              {/* Bolinha com a quantidade já pedida */}
-              <AnimatePresence>
-                {qtd > 0 && (
-                  <motion.span
-                    key={qtd}
-                    initial={{ scale: 0.4, opacity: 0 }}
-                    animate={{ scale: 1, opacity: 1 }}
-                    exit={{ scale: 0.4, opacity: 0 }}
-                    transition={{ type: "spring", stiffness: 700, damping: 26 }}
-                    className="num absolute top-3 right-3 grid h-8 min-w-8 place-items-center rounded-full bg-marca px-1.5 text-[16px] font-bold text-sobre-marca"
-                  >
-                    {qtd}
-                  </motion.span>
-                )}
-              </AnimatePresence>
-            </motion.button>
-          );
-        })}
-      </div>
-    </section>
-  );
-}
-
-/** Painel "Outro item": algo fora do cardápio, com nome e valor digitados na hora. */
-function ItemAvulso({ comanda, aberto, onFechar }: { comanda: Comanda; aberto: boolean; onFechar: () => void }) {
+/** Painel "Adicionar item": nome, valor (teclado de calculadora) e quantidade. */
+function NovoItem({ comanda, aberto, onFechar }: { comanda: Comanda; aberto: boolean; onFechar: () => void }) {
   const { mudarQtd } = useDados();
   const avisar = useAviso();
   const [nome, setNome] = useState("");
@@ -300,9 +208,9 @@ function ItemAvulso({ comanda, aberto, onFechar }: { comanda: Comanda; aberto: b
 
   function adicionar() {
     if (preco <= 0) return avisar("Digite o valor do item.");
-    const nomeFinal = nome.trim() || "Item avulso";
-    // Id próprio com prefixo "avulso-": não se mistura com os produtos do cardápio
-    mudarQtd(comanda.id, { id: `avulso-${uid()}`, nome: nomeFinal, preco }, qtd);
+    const nomeFinal = nome.trim() || "Item";
+    // Cada item digitado vira uma linha nova, com id próprio
+    mudarQtd(comanda.id, { id: `item-${uid()}`, nome: nomeFinal, preco }, qtd);
     vibrar();
     onFechar();
     avisar(`${qtd}× ${nomeFinal} na comanda`);
@@ -312,14 +220,14 @@ function ItemAvulso({ comanda, aberto, onFechar }: { comanda: Comanda; aberto: b
     <Sheet
       aberto={aberto}
       onFechar={onFechar}
-      titulo="Outro item"
+      titulo="Adicionar item"
       rodape={
         <Botao bloco onClick={adicionar}>
           Adicionar {preco > 0 ? reais(preco * qtd) : ""}
         </Botao>
       }
     >
-      <Campo rotulo="Nome do item (opcional)" placeholder="Ex.: Salgado, cigarro" value={nome} onChange={(e) => setNome(e.target.value)} autoCapitalize="sentences" />
+      <Campo rotulo="O que foi?" placeholder="Ex.: Cerveja, pinga, torresmo" value={nome} onChange={(e) => setNome(e.target.value)} autoCapitalize="sentences" />
 
       <div className="mt-5">
         <TecladoValor rotulo="Valor de cada um" valor={preco} onMudar={setPreco} />

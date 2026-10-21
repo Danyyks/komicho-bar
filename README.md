@@ -23,7 +23,7 @@ O caderninho do bar no celular: comanda, caixa (o que entrou e o que saiu) e fia
 ![Firebase](https://img.shields.io/badge/Firebase-F8CF94?style=flat-square&logo=firebase&logoColor=2B2620)
 ![Motion](https://img.shields.io/badge/Motion-F8CF94?style=flat-square&logo=framer&logoColor=2B2620)
 ![PWA](https://img.shields.io/badge/PWA-instalável-2B2620?style=flat-square&logo=pwa&logoColor=F8CF94)
-![Versão](https://img.shields.io/badge/versão-0.3-2B2620?style=flat-square)
+![Versão](https://img.shields.io/badge/versão-0.4-2B2620?style=flat-square)
 
 </div>
 
@@ -33,7 +33,7 @@ O caderninho do bar no celular: comanda, caixa (o que entrou e o que saiu) e fia
 
 Todo boteco pequeno tem o mesmo caderno: a comanda anotada no guardanapo, o fiado do cliente fiel numa página rabiscada e, no fim do mês, a dúvida de sempre: **sobrou dinheiro ou não?**
 
-O Komicho Bar troca esse caderno por um app que qualquer pessoa consegue usar, inclusive quem nunca mexeu em sistema. A tela inicial tem só três botões grandes: **Nova comanda**, **Entrou dinheiro** e **Saiu dinheiro**. Na comanda, cada toque num produto soma um item, e a conta fecha com **um toque** em Pix ou Cartão. Valores são digitados num **teclado de calculadora**, igual ao da maquininha, e escolher "com o quê saiu" já salva o gasto.
+O Komicho Bar troca esse caderno por um app que qualquer pessoa consegue usar, inclusive quem nunca mexeu em sistema. A tela inicial tem só três botões grandes: **Nova comanda**, **Entrou dinheiro** e **Saiu dinheiro**. Na comanda não há cardápio para cadastrar: o item é **digitado na hora** (o que foi, quanto custa e quantos), como no papel, e a conta fecha com **um toque** em Pix ou Cartão. Valores são digitados num **teclado de calculadora**, igual ao da maquininha, e escolher "com o quê saiu" já salva o gasto.
 
 A simplicidade veio de pesquisa: apps de caixa usados por comércios (venda rápida por valor, como na maquininha) e estudos de usabilidade com pessoas mais velhas (botões grandes, texto com palavras em vez de ícones soltos, nada de gestos escondidos, tempo para desfazer). O visual usa **tons pastel** em claro e escuro, com acabamento de app nativo: painéis que sobem de baixo, vibração leve ao tocar e modo offline.
 
@@ -46,7 +46,7 @@ A simplicidade veio de pesquisa: apps de caixa usados por comércios (venda ráp
 <table>
   <tr>
     <td align="center"><img src="docs/prints/01-hoje.png" width="220" /><br /><sub><b>Hoje</b> · caixa do dia e os 3 botões</sub></td>
-    <td align="center"><img src="docs/prints/02-comanda.png" width="220" /><br /><sub><b>Comanda</b> · pagou como? um toque fecha</sub></td>
+    <td align="center"><img src="docs/prints/02-comanda.png" width="220" /><br /><sub><b>Comanda</b> · item digitado na hora</sub></td>
     <td align="center"><img src="docs/prints/03-troco.png" width="220" /><br /><sub><b>Dinheiro</b> · teclado e troco</sub></td>
   </tr>
   <tr>
@@ -71,14 +71,12 @@ A simplicidade veio de pesquisa: apps de caixa usados por comércios (venda ráp
 
 - 🏠 **Tela Hoje**: quanto tem no caixa hoje + 3 botões grandes (Nova comanda, Entrou dinheiro, Saiu dinheiro) + comandas abertas
 - 🍺 **Comandas** no nome do cliente, com aviso se já houver uma aberta para a mesma pessoa
-- ➕ **Produtos em lista para baixo**, com **Mais pedidos** primeiro: cada toque soma 1, com contador no botão e ajuste de − / +
-- ✏️ **Outro item**: algo fora do cardápio, com nome, valor e quantidade digitados na hora
+- ✏️ **Adicionar item** digitado na hora: o que foi, valor no teclado e quantidade (sem cadastro de produtos), com − / + na lista para repetir
 - 💵 **Pagou como?** no rodapé da comanda: Pix e Cartão fecham com um toque; Dinheiro mostra o troco; Fiado pendura na conta; ajuste de valor opcional
 - 🔢 **Teclado de calculadora** próprio para valores (igual à maquininha), sem abrir o teclado do celular
 - 🟩🟥 **Entrou e Saiu dinheiro**: digita o valor e toca em como entrou ou com o quê saiu; o toque já salva (com opção "Ontem")
 - 📒 **Fiado**: saldo de cada cliente, histórico com os itens de cada comanda, receber pagamento (total ou parcial) e anotar valor avulso
 - 📊 **Balanço** por dia, semana, mês e ano: entrou, saiu e sobrou, gráfico de barras (toque numa barra para abrir o dia ou o mês), entradas por forma de pagamento e gastos por categoria
-- 🧾 **Cardápio** editável, com preço guardado no momento da venda (mudar o preço não altera vendas antigas)
 - ↩️ **Desfazer** em tudo que apaga ou fecha (o aviso fica 8 segundos)
 - 🎨 **Tons pastel** no tema claro, escuro ou automático
 - 📲 **Instalável** no Android e no iPhone, abre sem internet e avisa quando há versão nova
@@ -172,10 +170,9 @@ Detalhes em [`docs/arquitetura.md`](docs/arquitetura.md).
 - [x] Firestore, login Google e regras de segurança no ar
 - [x] Publicado na Vercel ([komicho-bar.vercel.app](https://komicho-bar.vercel.app))
 - [x] Redesign "caderninho": tela Hoje, fechar em um toque, teclado de calculadora e cores pastel
-- [ ] Cadastrar o cardápio real do bar
+- [x] Sem cadastro de produtos: itens digitados na hora (v0.4)
 - [ ] Acesso do funcionário (login próprio ou celular do bar)
 - [ ] Exportar o balanço do mês (PDF ou planilha)
-- [ ] Produtos mais vendidos no Balanço
 
 <br />
 

@@ -1,47 +1,19 @@
-// Dados iniciais: cardápio de exemplo (editável) e dados fictícios do modo demo.
+// Dados fictícios do modo demo (para testar telas e tirar prints). O app real começa vazio.
 import { uid } from "./utils";
-import type {
-  CategoriaGasto,
-  CategoriaProduto,
-  Cliente,
-  Comanda,
-  FormaPagamento,
-  ItemComanda,
-  Lancamento,
-  MovimentoFiado,
-  Produto,
-} from "@/types";
+import type { CategoriaGasto, Cliente, Comanda, FormaPagamento, ItemComanda, Lancamento, MovimentoFiado } from "@/types";
 
-/** Cardápio de exemplo para o app não começar vazio (preços em centavos). */
-const CARDAPIO: [string, number, CategoriaProduto][] = [
-  ["Brahma 600 ml", 1200, "Cervejas"],
-  ["Skol 600 ml", 1100, "Cervejas"],
-  ["Original 600 ml", 1300, "Cervejas"],
-  ["Heineken long neck", 900, "Cervejas"],
-  ["Lata de cerveja", 600, "Cervejas"],
-  ["Pinga (dose)", 500, "Destilados"],
-  ["Conhaque (dose)", 600, "Destilados"],
-  ["Vodka (dose)", 700, "Destilados"],
-  ["Coca-Cola lata", 600, "Sem álcool"],
-  ["Guaraná lata", 500, "Sem álcool"],
-  ["Água", 300, "Sem álcool"],
-  ["Torresmo", 1500, "Petiscos"],
-  ["Porção de fritas", 2000, "Petiscos"],
-  ["Amendoim", 400, "Petiscos"],
-  ["Gelo (saco)", 800, "Diversos"],
-];
-
-/** Cria a lista de produtos do cardápio de exemplo. */
-export function cardapioExemplo(): Produto[] {
-  const agora = Date.now();
-  return CARDAPIO.map(([nome, preco, categoria], i) => ({
-    id: uid(),
-    criadoEm: agora + i, // mantém a ordem original
-    nome,
-    preco,
-    categoria,
-  }));
-}
+/** Preços usados nos itens de exemplo (centavos): o dono digita tudo na hora no app real. */
+const PRECOS: Record<string, number> = {
+  "Brahma 600 ml": 1200,
+  "Skol 600 ml": 1100,
+  "Original 600 ml": 1300,
+  "Pinga (dose)": 500,
+  "Coca-Cola lata": 600,
+  "Guaraná lata": 500,
+  Torresmo: 1500,
+  "Porção de fritas": 2000,
+  Amendoim: 400,
+};
 
 /** Gerador de números "aleatórios" previsível: o demo fica sempre igual. */
 function sorteador(semente: number) {
@@ -55,10 +27,9 @@ function sorteador(semente: number) {
 /** Monta um banco fictício completo para o modo demo (prints e testes de tela). */
 export function dadosDemo() {
   const sorte = sorteador(42);
-  const produtos = cardapioExemplo();
   const agora = Date.now();
-  const p = (nome: string) => produtos.find((x) => x.nome === nome)!;
-  const item = (nome: string, qtd: number): ItemComanda => ({ produtoId: p(nome).id, nome, preco: p(nome).preco, qtd });
+  // Item digitado na hora: cada linha tem seu próprio id
+  const item = (nome: string, qtd: number): ItemComanda => ({ produtoId: uid(), nome, preco: PRECOS[nome], qtd });
 
   // Comandas abertas agora
   const comandas: Comanda[] = [
@@ -125,5 +96,5 @@ export function dadosDemo() {
     }
   }
 
-  return { produtos, comandas, clientes, fiado, lancamentos };
+  return { comandas, clientes, fiado, lancamentos };
 }

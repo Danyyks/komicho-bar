@@ -2,16 +2,17 @@
 // botões principais (Nova comanda, Entrou dinheiro, Saiu dinheiro) e as comandas abertas.
 import { useEffect, useMemo, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { ArrowDownLeft, ArrowUpRight, ChevronRight, ReceiptText } from "lucide-react";
+import { ArrowDownLeft, ArrowUpRight, ChevronRight, ReceiptText, Settings } from "lucide-react";
 import { useDados } from "@/context/DadosContext";
 import { CabecalhoAba } from "@/components/Cabecalho";
 import { Sheet } from "@/components/Sheet";
-import { Botao, BotaoGrande, Campo, Cartao, TituloSecao } from "@/components/ui";
+import { Botao, BotaoGrande, BotaoIcone, Campo, Cartao, TituloSecao } from "@/components/ui";
 import { reais, totalItens } from "@/lib/dinheiro";
 import { haQuantoTempo, hojePorExtenso, periodoDe } from "@/lib/datas";
 import { resumir } from "@/lib/balanco";
 import { cn } from "@/lib/utils";
 import { EntrouDinheiro, SaiuDinheiro } from "./EntradaSaida";
+import { Ajustes } from "./Ajustes";
 
 /** Atualiza a tela a cada minuto (para o "há 15 min" andar sozinho). */
 function useRelogio(): number {
@@ -26,14 +27,18 @@ function useRelogio(): number {
 export function Hoje() {
   const { comandas, lancamentos } = useDados();
   const agora = useRelogio();
-  const [painel, setPainel] = useState<"comanda" | "entrou" | "saiu" | null>(null);
+  const [painel, setPainel] = useState<"comanda" | "entrou" | "saiu" | "ajustes" | null>(null);
 
   // Caixa de hoje: tudo que entrou menos tudo que saiu desde a meia-noite
   const caixa = useMemo(() => resumir(lancamentos, periodoDe("dia", new Date(agora))), [lancamentos, agora]);
 
   return (
     <>
-      <CabecalhoAba titulo="Hoje" subtitulo={hojePorExtenso()} />
+      <CabecalhoAba
+        titulo="Hoje"
+        subtitulo={hojePorExtenso()}
+        direita={<BotaoIcone icone={Settings} aria-label="Ajustes" onClick={() => setPainel("ajustes")} className="text-texto-2" />}
+      />
 
       {/* Caixa do dia (toque abre o Balanço) */}
       <Link to="/balanco" className="block transition-transform active:scale-[0.98]">
@@ -95,6 +100,7 @@ export function Hoje() {
       <NovaComanda aberto={painel === "comanda"} onFechar={() => setPainel(null)} />
       <EntrouDinheiro aberto={painel === "entrou"} onFechar={() => setPainel(null)} />
       <SaiuDinheiro aberto={painel === "saiu"} onFechar={() => setPainel(null)} />
+      <Ajustes aberto={painel === "ajustes"} onFechar={() => setPainel(null)} />
     </>
   );
 }

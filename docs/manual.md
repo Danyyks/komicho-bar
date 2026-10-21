@@ -19,9 +19,10 @@ No topo da tela Hoje aparece **quanto tem no caixa hoje** (o que entrou menos o 
 2. Digite o nome do cliente e toque em **Abrir comanda**. Se esse nome já tiver comanda aberta, o app avisa e oferece abrir a dela.
 
 **Anotar o que o cliente pediu**
-- Toque no produto: **cada toque soma 1**. Os mais pedidos aparecem primeiro; o resto vem logo abaixo, por tipo (Cervejas, Destilados...).
-- Errou? Use o **−** na lista de cima.
-- Não está no cardápio? Toque em **Outro item**, digite o valor no teclado e toque em **Adicionar**.
+1. Toque em **Adicionar item**.
+2. Escreva o que foi (ex.: "Cerveja"), digite o valor no teclado e, se for mais de um, aumente a **Quantidade**.
+3. Toque em **Adicionar**.
+- Pediu mais um do mesmo? Toque no **+** na linha do item. Errou? Use o **−**.
 
 **Fechar a conta**
 
@@ -58,11 +59,9 @@ Mostra **quanto entrou, quanto saiu e quanto sobrou** no **Dia, Semana, Mês ou 
 - Use as setas **‹ ›** para ver períodos anteriores.
 - Lançou errado? Toque no lançamento para corrigir ou apagar.
 
-## Produtos
+## Ajustes
 
-- Toque num produto para mudar o nome, o preço ou o tipo. **Novo produto** no botão de baixo.
-- Mudar o preço **não altera** vendas que já foram feitas.
-- A engrenagem abre os **Ajustes**: tema claro/escuro e instalar o app.
+A engrenagem no topo da tela **Hoje** abre os Ajustes: tema claro/escuro, instalar o app e sair da conta.
 
 ## Dicas
 

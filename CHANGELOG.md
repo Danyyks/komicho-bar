@@ -2,6 +2,17 @@
 
 Mudanças do Komicho Bar, da mais recente para a mais antiga.
 
+## 0.4.0 — 21/10/2026
+
+Sem cadastro de produtos: o bar é pequeno e o dono digita o item na hora, como no papel. 45 testes de ponta a ponta passando.
+
+- Comanda: saíram a grade de produtos, os "Mais pedidos" e as categorias. Entrou o botão grande **Adicionar item** (o que foi, valor no teclado de calculadora e quantidade); o + na linha repete o item.
+- Saiu a aba **Produtos** (e o cadastro, o cardápio de exemplo e as ações de salvar/apagar produto). Ficaram 3 abas: Hoje, Fiado e Balanço.
+- **Ajustes** (tema, instalar, sair) foram para a engrenagem no topo da tela Hoje.
+- Itens já salvos (comandas abertas, vendas e fiado) continuam iguais: guardam nome e preço em cada linha.
+- Modo demo sem cardápio; prints, README, manual, arquitetura e CLAUDE.md atualizados.
+- `vite.config.ts` usa `import.meta.dirname` (some o aviso do Vite).
+
 ## 0.3.0 — 21/10/2026
 
 Redesign "caderninho": o mais simples possível, com menos toques, para um funcionário mais velho. Baseado em pesquisa de apps de caixa de comércio e de usabilidade para pessoas mais velhas. 44 testes de ponta a ponta passando.

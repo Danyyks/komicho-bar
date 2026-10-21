@@ -55,7 +55,7 @@ vercel --prod
 
 ## 6. Instalar no celular
 
-- **Android (Chrome/Samsung Internet):** abra o endereço → menu ⋮ → **Instalar app** (ou Produtos → Ajustes → Instalar).
+- **Android (Chrome/Samsung Internet):** abra o endereço → menu ⋮ → **Instalar app** (ou engrenagem da tela Hoje → Ajustes → Instalar).
 - **iPhone (Safari):** **Compartilhar** → **Adicionar à Tela de Início**.
 
 ## Liberar outra pessoa no futuro
