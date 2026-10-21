@@ -1,57 +1,71 @@
 # Como usar o Komicho Bar
 
-Guia rápido para quem trabalha no balcão. O app tem 4 abas no rodapé: **Comandas**, **Fiado**, **Balanço** e **Produtos**.
+Guia rápido para quem trabalha no balcão. O app é o caderninho do bar no celular: **comanda**, **caixa** (o que entrou e o que saiu) e **fiado**.
 
-## Comandas
+Tudo começa na tela **Hoje**, que tem três botões grandes:
 
-**Abrir uma comanda**
-1. Toque em **Nova comanda** (botão amarelo).
-2. Digite o nome da pessoa e toque em **Abrir comanda**. Se já houver uma comanda aberta com esse nome, o app avisa e oferece abrir a dela.
+| Botão | Para quê |
+|---|---|
+| 🟧 **Nova comanda** | Anotar o que um cliente está pedindo |
+| 🟩 **Entrou dinheiro** | Venda no balcão, sem comanda |
+| 🟥 **Saiu dinheiro** | Compra de mercadoria e contas do bar |
 
-**Adicionar o que a pessoa pediu**
-- Escolha a categoria (Cervejas, Destilados...) e toque no produto. **Cada toque soma 1.**
+No topo da tela Hoje aparece **quanto tem no caixa hoje** (o que entrou menos o que saiu).
+
+## Comanda
+
+**Abrir**
+1. Toque em **Nova comanda**.
+2. Digite o nome do cliente e toque em **Abrir comanda**. Se esse nome já tiver comanda aberta, o app avisa e oferece abrir a dela.
+
+**Anotar o que o cliente pediu**
+- Toque no produto: **cada toque soma 1**. Os mais pedidos aparecem primeiro; o resto vem logo abaixo, por tipo (Cervejas, Destilados...).
 - Errou? Use o **−** na lista de cima.
-- **Algo que não está no cardápio?** Toque em **Outro item**, digite o nome, o valor de cada um e a quantidade, e toque em **Adicionar**.
+- Não está no cardápio? Toque em **Outro item**, digite o valor no teclado e toque em **Adicionar**.
 
 **Fechar a conta**
-1. Toque em **Fechar conta**.
-2. Escolha como a pessoa pagou:
-   - **Dinheiro:** digite (ou toque) quanto ela deu e o app mostra o **troco**. Depois toque em **Confirmar pagamento**.
-   - **Pix** ou **Cartão:** um toque e pronto (a cobrança continua na maquininha).
-   - **Fiado:** escolha o cliente e o valor vai para a conta dele.
-3. Quer dar desconto? Toque em **Dar desconto ou ajustar** antes de escolher a forma.
 
-Fechou errado? Toque em **Desfazer** no aviso que aparece embaixo.
+No rodapé da comanda, em **Pagou como?**:
+- **Pix** ou **Cartão**: um toque e pronto. A cobrança continua na maquininha.
+- **Dinheiro**: digite (ou toque na nota) quanto o cliente deu e veja o **troco**. Depois, **Confirmar**.
+- **Fiado**: toque no nome do cliente e a conta vai para o caderno dele.
+- Quer dar desconto? Toque em **Ajustar valor** antes.
+
+Fechou errado? Toque em **Desfazer** no aviso que aparece embaixo (ele fica 8 segundos).
+
+**Cancelar** uma comanda aberta por engano: botão **Cancelar esta comanda**, no fim da página.
+
+## Caixa: Entrou e Saiu
+
+1. Toque em **Entrou dinheiro** ou **Saiu dinheiro**.
+2. Digite o valor no teclado (igual à maquininha: 4, 5, 0, 0 = R$ 45,00). Segurar o botão de apagar zera tudo.
+3. Toque em **como entrou** (Dinheiro, Pix, Cartão) ou **com o quê saiu** (Bebidas, Gelo e carvão...). **Esse toque já salva.**
+
+Esqueceu de anotar ontem? Toque em **Ontem** antes de escolher.
+
+As vendas das comandas entram no caixa **sozinhas**: não precisa anotar de novo.
 
 ## Fiado
 
-- A tela mostra **quanto há para receber** e quanto cada cliente deve.
-- Toque no cliente para ver o histórico.
-- **Recebi:** o cliente pagou (tudo ou uma parte). Escolha como pagou e confirme. O valor entra no Balanço.
-- **Anotar:** pendurar um valor sem comanda (ex.: levou cerveja para casa).
-- **Novo cliente:** botão amarelo na aba Fiado.
+- A aba **Fiado** mostra quanto há para receber e quanto cada cliente deve.
+- Toque no cliente para ver o caderno dele.
+- **Recebi**: digite quanto pagou (já vem com o total) e toque em como pagou. O valor sai da dívida e entra no caixa.
+- **Anotar**: pendurar um valor sem comanda (ex.: levou cerveja para casa).
 
 ## Balanço
 
-Mostra **quanto entrou, quanto saiu e quanto sobrou**.
-
-- Escolha **Dia, Semana, Mês ou Ano** no topo e use as setas **‹ ›** para ver períodos anteriores.
-- Toque numa barra do gráfico para abrir aquele dia (ou mês).
-- As vendas das comandas entram **sozinhas**.
-- **Anotar** (botão amarelo) serve para:
-  - **Gasto:** tudo que você comprou ou pagou (bebidas da distribuidora, gelo, luz, aluguel...). Digite o valor, escolha o tipo e salve.
-  - **Venda:** algo vendido sem comanda.
+Mostra **quanto entrou, quanto saiu e quanto sobrou** no **Dia, Semana, Mês ou Ano**.
+- Use as setas **‹ ›** para ver períodos anteriores.
 - Lançou errado? Toque no lançamento para corrigir ou apagar.
 
 ## Produtos
 
-- Toque num produto para mudar o nome, o preço ou a categoria.
-- **Novo produto:** botão amarelo.
-- Mudar o preço **não altera** as vendas que já foram feitas.
-- O ícone de engrenagem abre os **Ajustes**: tema claro/escuro e instalar o app.
+- Toque num produto para mudar o nome, o preço ou o tipo. **Novo produto** no botão de baixo.
+- Mudar o preço **não altera** vendas que já foram feitas.
+- A engrenagem abre os **Ajustes**: tema claro/escuro e instalar o app.
 
 ## Dicas
 
 - Tudo que apaga pede confirmação ou mostra **Desfazer**.
-- O app funciona mesmo se a internet cair e sincroniza sozinho quando ela volta (na versão em nuvem).
+- O app funciona mesmo se a internet cair e sincroniza sozinho quando ela volta.
 - Apareceu **"Nova versão do app"**? Toque em **Atualizar**.

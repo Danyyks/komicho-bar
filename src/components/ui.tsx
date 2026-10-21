@@ -144,7 +144,7 @@ export function Segmentado<T extends string>({ opcoes, valor, onMudar, id }: { o
             <motion.span
               layoutId={`seg-${id}`}
               transition={{ type: "spring", stiffness: 500, damping: 38 }}
-              className="absolute inset-0 rounded-xl bg-superficie shadow-cartao dark:bg-[#3a332c]"
+              className="absolute inset-0 rounded-xl bg-controle shadow-cartao"
             />
           )}
           <span className="relative">{o.rotulo}</span>
@@ -161,7 +161,7 @@ export function Chip({ ativo, children, className, ...props }: ButtonHTMLAttribu
       {...props}
       className={cn(
         "h-11 shrink-0 rounded-full px-4 text-[15px] font-semibold whitespace-nowrap transition-[transform,background-color] active:scale-95",
-        ativo ? "bg-texto text-fundo" : "bg-elevado text-texto",
+        ativo ? "bg-marca text-sobre-marca" : "bg-elevado text-texto",
         className,
       )}
     >
@@ -182,6 +182,44 @@ export function Opcao({ icone: Icone, titulo, detalhe, onClick, cor = "marca" }:
         <span className="block text-[17px] font-semibold">{titulo}</span>
         {detalhe && <span className="block text-[14px] text-texto-2">{detalhe}</span>}
       </span>
+    </button>
+  );
+}
+
+/** Cores pastel dos botões grandes: fundo suave + texto/ícone escuro do mesmo tom. */
+const CORES_GRANDE = {
+  marca: { fundo: "bg-marca text-sobre-marca", icone: "bg-white/45 dark:bg-black/15" },
+  positivo: { fundo: "bg-positivo-suave text-positivo", icone: "bg-white/60 dark:bg-white/10" },
+  negativo: { fundo: "bg-negativo-suave text-negativo", icone: "bg-white/60 dark:bg-white/10" },
+  lilas: { fundo: "bg-lilas-suave text-lilas-tinta", icone: "bg-white/60 dark:bg-white/10" },
+} as const;
+export type CorGrande = keyof typeof CORES_GRANDE;
+
+/** Botão grande da tela inicial: ícone + título + uma linha explicando o que faz. */
+export function BotaoGrande({ icone: Icone, titulo, detalhe, cor, onClick }: { icone: LucideIcon; titulo: string; detalhe?: string; cor: CorGrande; onClick: () => void }) {
+  const c = CORES_GRANDE[cor];
+  return (
+    <button onClick={onClick} className={cn("flex min-h-[80px] w-full items-center gap-4 rounded-3xl px-5 text-left transition-transform active:scale-[0.97]", c.fundo)}>
+      <span className={cn("grid size-12 shrink-0 place-items-center rounded-2xl", c.icone)}>
+        <Icone className="size-7" strokeWidth={2.2} />
+      </span>
+      <span>
+        <span className="block text-[20px] leading-tight font-bold">{titulo}</span>
+        {detalhe && <span className="block text-[15px] font-medium opacity-80">{detalhe}</span>}
+      </span>
+    </button>
+  );
+}
+
+/** Botão de escolha em grade (forma de pagamento, motivo do gasto): um toque e pronto. */
+export function BotaoEscolha({ icone: Icone, rotulo, cor, onClick }: { icone?: LucideIcon; rotulo: string; cor: CorGrande; onClick: () => void }) {
+  return (
+    <button
+      onClick={onClick}
+      className={cn("flex min-h-16 flex-col items-center justify-center gap-1 rounded-2xl px-2 text-[16px] font-bold transition-transform active:scale-95", CORES_GRANDE[cor].fundo)}
+    >
+      {Icone && <Icone className="size-6" strokeWidth={2.2} />}
+      <span className="leading-tight">{rotulo}</span>
     </button>
   );
 }

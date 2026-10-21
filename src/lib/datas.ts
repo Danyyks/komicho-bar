@@ -165,3 +165,9 @@ export function deInputData(valor: string): number {
   if (+inicioDoDia(escolhido) !== +inicioDoDia(agora)) escolhido.setHours(12, 0, 0, 0);
   return +escolhido;
 }
+
+/** Data de hoje por extenso para o topo da tela inicial: "Terça-feira, 21 de outubro" */
+export function hojePorExtenso(): string {
+  const texto = new Date().toLocaleDateString("pt-BR", { weekday: "long", day: "numeric", month: "long" });
+  return texto.charAt(0).toUpperCase() + texto.slice(1); // só a primeira letra maiúscula
+}

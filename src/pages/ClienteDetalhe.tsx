@@ -1,13 +1,14 @@
 // Página do cliente do fiado: quanto deve, receber pagamento, anotar compra e histórico.
 import { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
-import { ArrowDownLeft, ArrowUpRight, HandCoins, Pencil, Plus, Trash2 } from "lucide-react";
+import { ArrowDownLeft, ArrowUpRight, Banknote, CreditCard, HandCoins, Pencil, Plus, QrCode, Trash2 } from "lucide-react";
 import { useDados } from "@/context/DadosContext";
 import { useAviso } from "@/context/AvisoContext";
 import { CabecalhoDetalhe } from "@/components/Cabecalho";
 import { Confirmar } from "@/components/Confirmar";
 import { Sheet } from "@/components/Sheet";
-import { Avatar, Botao, BotaoIcone, Campo, CampoValor, Cartao, Segmentado, TituloSecao } from "@/components/ui";
+import { TecladoValor } from "@/components/Teclado";
+import { Avatar, Botao, BotaoEscolha, Campo, Cartao, TituloSecao } from "@/components/ui";
 import { reais } from "@/lib/dinheiro";
 import { dataEHora } from "@/lib/datas";
 import { saldoDoCliente } from "@/lib/balanco";
@@ -39,11 +40,7 @@ export function ClienteDetalhe() {
 
   return (
     <>
-      <CabecalhoDetalhe
-        voltarPara="/fiado"
-        titulo={cliente.nome}
-        direita={<BotaoIcone icone={Trash2} aria-label="Apagar cliente" onClick={() => setApagar(true)} className="text-negativo" />}
-      />
+      <CabecalhoDetalhe voltarPara="/fiado" titulo={cliente.nome} />
 
       {/* Identificação (toque no nome para renomear) */}
       <div className="mt-1 flex items-center gap-4 px-1">
@@ -96,6 +93,11 @@ export function ClienteDetalhe() {
         </Cartao>
       )}
 
+      {/* Apagar fica no fim da página, escrito por extenso */}
+      <button onClick={() => setApagar(true)} className="mt-8 h-12 w-full rounded-2xl text-[16px] font-semibold text-negativo active:bg-negativo-suave">
+        Apagar este cliente
+      </button>
+
       <ReceberPagamento cliente={cliente} deve={deve} aberto={receber} onFechar={() => setReceber(false)} />
       <AnotarNaConta cliente={cliente} aberto={anotar} onFechar={() => setAnotar(false)} />
       <RenomearCliente cliente={cliente} aberto={renomear} onFechar={() => setRenomear(false)} />
@@ -115,46 +117,41 @@ export function ClienteDetalhe() {
   );
 }
 
-/** Recebe dinheiro do cliente: abate da conta e entra no Balanço. */
+/** Recebe dinheiro do cliente: digita o valor e toca em como pagou (o toque já salva).
+ * Abate da conta e entra no caixa ao mesmo tempo. */
 function ReceberPagamento({ cliente, deve, aberto, onFechar }: { cliente: Cliente; deve: number; aberto: boolean; onFechar: () => void }) {
   const { receberFiado } = useDados();
   const avisar = useAviso();
   const [valor, setValor] = useState(0);
-  const [forma, setForma] = useState<FormaPagamento>("dinheiro");
 
   // Abre já com o valor total da dívida (o caso mais comum)
   useEffect(() => {
     if (aberto) setValor(Math.max(0, deve));
   }, [aberto]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const confirmar = () => {
+  function receber(forma: FormaPagamento) {
     if (valor <= 0) return avisar("Digite o valor recebido.");
     receberFiado(cliente, valor, forma);
     onFechar();
     avisar(`Recebido ${reais(valor)} de ${cliente.nome}`);
-  };
+  }
 
   return (
-    <Sheet aberto={aberto} onFechar={onFechar} titulo="Receber pagamento" rodape={<Botao bloco onClick={confirmar}>Confirmar recebimento</Botao>}>
-      <div className="py-3">
-        <CampoValor rotulo="Valor recebido" valor={valor} onMudar={setValor} />
-        {deve > 0 && valor !== deve && (
-          <p className="mt-2 text-center text-[15px] text-texto-2">
-            {valor < deve ? `Fica devendo ${reais(deve - valor)}` : `Fica com ${reais(valor - deve)} de crédito`}
-          </p>
-        )}
+    <Sheet aberto={aberto} onFechar={onFechar} titulo="Receber pagamento">
+      <TecladoValor rotulo="Quanto pagou?" valor={valor} onMudar={setValor} />
+      {deve > 0 && valor > 0 && valor !== deve && (
+        <p className="mt-3 text-center text-[16px] font-medium text-texto-2">
+          {valor < deve ? `Fica devendo ${reais(deve - valor)}` : `Fica com ${reais(valor - deve)} de crédito`}
+        </p>
+      )}
+
+      {/* Como pagou: o toque já salva */}
+      <p className="mt-5 mb-2.5 text-center text-[16px] font-semibold text-texto-2">Como pagou? Toque para salvar</p>
+      <div className="grid grid-cols-3 gap-2.5">
+        <BotaoEscolha icone={Banknote} rotulo="Dinheiro" cor="positivo" onClick={() => receber("dinheiro")} />
+        <BotaoEscolha icone={QrCode} rotulo="Pix" cor="positivo" onClick={() => receber("pix")} />
+        <BotaoEscolha icone={CreditCard} rotulo="Cartão" cor="positivo" onClick={() => receber("cartao")} />
       </div>
-      <p className="mt-4 mb-2 text-[15px] font-medium text-texto-2">Como pagou</p>
-      <Segmentado
-        id="forma-fiado"
-        valor={forma}
-        onMudar={setForma}
-        opcoes={[
-          { valor: "dinheiro", rotulo: "Dinheiro" },
-          { valor: "pix", rotulo: "Pix" },
-          { valor: "cartao", rotulo: "Cartão" },
-        ]}
-      />
     </Sheet>
   );
 }
@@ -182,9 +179,7 @@ function AnotarNaConta({ cliente, aberto, onFechar }: { cliente: Cliente; aberto
 
   return (
     <Sheet aberto={aberto} onFechar={onFechar} titulo="Anotar na conta" rodape={<Botao bloco onClick={salvar}>Anotar</Botao>}>
-      <div className="py-3">
-        <CampoValor valor={valor} onMudar={setValor} autoFocus />
-      </div>
+      <TecladoValor rotulo="Quanto vai na conta?" valor={valor} onMudar={setValor} />
       <div className="mt-4">
         <Campo rotulo="O que foi (opcional)" placeholder="Ex.: 2 cervejas para viagem" value={descricao} onChange={(e) => setDescricao(e.target.value)} />
       </div>

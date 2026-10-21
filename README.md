@@ -6,24 +6,24 @@
 
 **Comandas, fiado e balanço do boteco na palma da mão.**
 
-App instalável (PWA) feito para o dia a dia de um bar de vila: abre comanda num toque, pendura no fiado e mostra quanto entrou, saiu e sobrou no dia, na semana, no mês e no ano.
+O caderninho do bar no celular: comanda, caixa (o que entrou e o que saiu) e fiado, com botões grandes, poucos toques e cores pastel, pensado para quem não tem intimidade com tecnologia.
 
 <br />
 
-[![No ar na Vercel](https://img.shields.io/badge/Vercel-No_ar-F2A93B?style=for-the-badge&logo=vercel&logoColor=14110E&labelColor=14110E)](https://komicho-bar.vercel.app)
+[![No ar na Vercel](https://img.shields.io/badge/Vercel-No_ar-F8CF94?style=for-the-badge&logo=vercel&logoColor=2B2620&labelColor=2B2620)](https://komicho-bar.vercel.app)
 
 <sub>Uso interno do Komicho Bar: só a conta Google do dono entra.</sub>
 
 <br />
 
-![React](https://img.shields.io/badge/React_19-F2A93B?style=flat-square&logo=react&logoColor=14110E)
-![TypeScript](https://img.shields.io/badge/TypeScript-F2A93B?style=flat-square&logo=typescript&logoColor=14110E)
-![Vite](https://img.shields.io/badge/Vite-F2A93B?style=flat-square&logo=vite&logoColor=14110E)
-![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS_v4-F2A93B?style=flat-square&logo=tailwindcss&logoColor=14110E)
-![Firebase](https://img.shields.io/badge/Firebase-F2A93B?style=flat-square&logo=firebase&logoColor=14110E)
-![Motion](https://img.shields.io/badge/Motion-F2A93B?style=flat-square&logo=framer&logoColor=14110E)
-![PWA](https://img.shields.io/badge/PWA-instalável-14110E?style=flat-square&logo=pwa&logoColor=F2A93B)
-![Versão](https://img.shields.io/badge/versão-0.2-14110E?style=flat-square)
+![React](https://img.shields.io/badge/React_19-F8CF94?style=flat-square&logo=react&logoColor=2B2620)
+![TypeScript](https://img.shields.io/badge/TypeScript-F8CF94?style=flat-square&logo=typescript&logoColor=2B2620)
+![Vite](https://img.shields.io/badge/Vite-F8CF94?style=flat-square&logo=vite&logoColor=2B2620)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS_v4-F8CF94?style=flat-square&logo=tailwindcss&logoColor=2B2620)
+![Firebase](https://img.shields.io/badge/Firebase-F8CF94?style=flat-square&logo=firebase&logoColor=2B2620)
+![Motion](https://img.shields.io/badge/Motion-F8CF94?style=flat-square&logo=framer&logoColor=2B2620)
+![PWA](https://img.shields.io/badge/PWA-instalável-2B2620?style=flat-square&logo=pwa&logoColor=F8CF94)
+![Versão](https://img.shields.io/badge/versão-0.3-2B2620?style=flat-square)
 
 </div>
 
@@ -33,9 +33,9 @@ App instalável (PWA) feito para o dia a dia de um bar de vila: abre comanda num
 
 Todo boteco pequeno tem o mesmo caderno: a comanda anotada no guardanapo, o fiado do cliente fiel numa página rabiscada e, no fim do mês, a dúvida de sempre: **sobrou dinheiro ou não?**
 
-O Komicho Bar troca esse caderno por um app que qualquer pessoa da família consegue usar. Abrir uma comanda é digitar o nome do freguês. Somar uma cerveja é tocar no botão da cerveja. Fechar a conta é escolher Dinheiro, Pix, Cartão ou Fiado, e o app faz o resto: calcula o troco, pendura na conta do cliente ou lança a venda no Balanço sozinho.
+O Komicho Bar troca esse caderno por um app que qualquer pessoa consegue usar, inclusive quem nunca mexeu em sistema. A tela inicial tem só três botões grandes: **Nova comanda**, **Entrou dinheiro** e **Saiu dinheiro**. Na comanda, cada toque num produto soma um item, e a conta fecha com **um toque** em Pix ou Cartão. Valores são digitados num **teclado de calculadora**, igual ao da maquininha, e escolher "com o quê saiu" já salva o gasto.
 
-O diferencial está no acabamento. O visual segue o padrão dos melhores apps nativos (Apple e Google): painéis que sobem de baixo com efeito de mola, título grande que encolhe ao rolar, vibração leve ao tocar, modo escuro pensado para a noite no bar e botões grandes, porque quem usa está atrás do balcão, com pressa. Tudo que apaga tem "Desfazer", e o app abre mesmo sem internet.
+A simplicidade veio de pesquisa: apps de caixa usados por comércios (venda rápida por valor, como na maquininha) e estudos de usabilidade com pessoas mais velhas (botões grandes, texto com palavras em vez de ícones soltos, nada de gestos escondidos, tempo para desfazer). O visual usa **tons pastel** em claro e escuro, com acabamento de app nativo: painéis que sobem de baixo, vibração leve ao tocar e modo offline.
 
 <br />
 
@@ -45,17 +45,17 @@ O diferencial está no acabamento. O visual segue o padrão dos melhores apps na
 
 <table>
   <tr>
-    <td align="center"><img src="docs/prints/01-comandas.png" width="220" /><br /><sub><b>Comandas</b> · o que está aberto agora</sub></td>
-    <td align="center"><img src="docs/prints/02-comanda.png" width="220" /><br /><sub><b>Comanda</b> · um toque soma o item</sub></td>
-    <td align="center"><img src="docs/prints/03-fechar-conta.png" width="220" /><br /><sub><b>Fechar conta</b> · dinheiro, Pix, cartão ou fiado</sub></td>
+    <td align="center"><img src="docs/prints/01-hoje.png" width="220" /><br /><sub><b>Hoje</b> · caixa do dia e os 3 botões</sub></td>
+    <td align="center"><img src="docs/prints/02-comanda.png" width="220" /><br /><sub><b>Comanda</b> · pagou como? um toque fecha</sub></td>
+    <td align="center"><img src="docs/prints/03-troco.png" width="220" /><br /><sub><b>Dinheiro</b> · teclado e troco</sub></td>
   </tr>
   <tr>
-    <td align="center"><img src="docs/prints/04-balanco-mes.png" width="220" /><br /><sub><b>Balanço</b> · entrou, saiu e sobrou</sub></td>
-    <td align="center"><img src="docs/prints/05-fiado.png" width="220" /><br /><sub><b>Fiado</b> · quanto há para receber</sub></td>
-    <td align="center"><img src="docs/prints/06-cliente.png" width="220" /><br /><sub><b>Cliente</b> · saldo e histórico</sub></td>
+    <td align="center"><img src="docs/prints/04-saiu-dinheiro.png" width="220" /><br /><sub><b>Saiu dinheiro</b> · o toque no motivo salva</sub></td>
+    <td align="center"><img src="docs/prints/05-balanco-mes.png" width="220" /><br /><sub><b>Balanço</b> · entrou, saiu e sobrou</sub></td>
+    <td align="center"><img src="docs/prints/06-cliente.png" width="220" /><br /><sub><b>Fiado</b> · o caderno de cada cliente</sub></td>
   </tr>
   <tr>
-    <td align="center"><img src="docs/prints/07-balanco-ano-escuro.png" width="220" /><br /><sub><b>Modo escuro</b> · balanço do ano</sub></td>
+    <td align="center"><img src="docs/prints/07-hoje-escuro.png" width="220" /><br /><sub><b>Modo escuro</b> · tela Hoje</sub></td>
     <td align="center"><img src="docs/prints/08-comanda-escuro.png" width="220" /><br /><sub><b>Modo escuro</b> · comanda aberta</sub></td>
     <td></td>
   </tr>
@@ -69,16 +69,18 @@ O diferencial está no acabamento. O visual segue o padrão dos melhores apps na
 
 ## Funcionalidades
 
-- 🍺 **Comandas** no nome do freguês, com aviso se já houver uma aberta para a mesma pessoa
-- ➕ **Grade de produtos** por categoria: cada toque soma 1, com contador no botão e ajuste de − / +
-- ✏️ **Outro item**: adiciona à comanda algo fora do cardápio, com nome, valor e quantidade digitados na hora
-- 💵 **Fechar conta** em Dinheiro (com cálculo de troco), Pix, Cartão ou Fiado, com desconto opcional
+- 🏠 **Tela Hoje**: quanto tem no caixa hoje + 3 botões grandes (Nova comanda, Entrou dinheiro, Saiu dinheiro) + comandas abertas
+- 🍺 **Comandas** no nome do cliente, com aviso se já houver uma aberta para a mesma pessoa
+- ➕ **Produtos em lista para baixo**, com **Mais pedidos** primeiro: cada toque soma 1, com contador no botão e ajuste de − / +
+- ✏️ **Outro item**: algo fora do cardápio, com nome, valor e quantidade digitados na hora
+- 💵 **Pagou como?** no rodapé da comanda: Pix e Cartão fecham com um toque; Dinheiro mostra o troco; Fiado pendura na conta; ajuste de valor opcional
+- 🔢 **Teclado de calculadora** próprio para valores (igual à maquininha), sem abrir o teclado do celular
+- 🟩🟥 **Entrou e Saiu dinheiro**: digita o valor e toca em como entrou ou com o quê saiu; o toque já salva (com opção "Ontem")
 - 📒 **Fiado**: saldo de cada cliente, histórico com os itens de cada comanda, receber pagamento (total ou parcial) e anotar valor avulso
 - 📊 **Balanço** por dia, semana, mês e ano: entrou, saiu e sobrou, gráfico de barras (toque numa barra para abrir o dia ou o mês), entradas por forma de pagamento e gastos por categoria
-- ✍️ **Anotar** gastos (Bebidas, Gelo e carvão, Petiscos, Luz e água, Aluguel, Outros) e vendas sem comanda, com data
 - 🧾 **Cardápio** editável, com preço guardado no momento da venda (mudar o preço não altera vendas antigas)
-- ↩️ **Desfazer** em tudo que apaga ou fecha
-- 🌙 **Tema claro, escuro ou automático**
+- ↩️ **Desfazer** em tudo que apaga ou fecha (o aviso fica 8 segundos)
+- 🎨 **Tons pastel** no tema claro, escuro ou automático
 - 📲 **Instalável** no Android e no iPhone, abre sem internet e avisa quando há versão nova
 - 🔒 **Login só com Google**, liberado apenas para a conta do dono (app e regras do banco)
 
@@ -106,11 +108,11 @@ komicho-bar/
 ├── docs/                   # arquitetura, padrões, deploy, manual de uso e prints
 ├── public/                 # favicon e ícones do PWA (gerados por `npm run icones`)
 ├── src/
-│   ├── components/         # blocos de interface (ui, Sheet, Cabecalho, Layout...)
+│   ├── components/         # blocos de interface (ui, Teclado, Sheet, Cabecalho, Layout...)
 │   ├── context/            # Dados, Auth, Tema e Avisos (estado global)
 │   ├── hooks/              # useVoltar, useInstalar
 │   ├── lib/                # repo (Firestore/localStorage), balanco, datas, dinheiro, seed
-│   ├── pages/              # uma tela por arquivo (Comandas, Balanco, Fiado...)
+│   ├── pages/              # uma tela por arquivo (Hoje, ComandaDetalhe, Balanco, Fiado...)
 │   ├── types.ts            # modelo de dados (valores sempre em centavos)
 │   └── App.tsx             # provedores e rotas
 ├── firestore.rules         # só e-mails autorizados leem e gravam
@@ -169,8 +171,9 @@ Detalhes em [`docs/arquitetura.md`](docs/arquitetura.md).
 - [x] Projeto Firebase e app web configurados
 - [x] Firestore, login Google e regras de segurança no ar
 - [x] Publicado na Vercel ([komicho-bar.vercel.app](https://komicho-bar.vercel.app))
+- [x] Redesign "caderninho": tela Hoje, fechar em um toque, teclado de calculadora e cores pastel
 - [ ] Cadastrar o cardápio real do bar
-- [ ] Acesso da segunda pessoa (celular da mãe)
+- [ ] Acesso do funcionário (login próprio ou celular do bar)
 - [ ] Exportar o balanço do mês (PDF ou planilha)
 - [ ] Produtos mais vendidos no Balanço
 

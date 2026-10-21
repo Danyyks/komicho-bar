@@ -2,12 +2,12 @@
 import { useEffect } from "react";
 import { NavLink, Outlet, useLocation } from "react-router-dom";
 import { motion } from "motion/react";
-import { BookUser, ChartNoAxesColumn, Beer, ReceiptText, type LucideIcon } from "lucide-react";
+import { BookUser, ChartNoAxesColumn, Beer, House, type LucideIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { UpdatePrompt } from "./UpdatePrompt";
 
 const ABAS: { para: string; rotulo: string; icone: LucideIcon }[] = [
-  { para: "/", rotulo: "Comandas", icone: ReceiptText },
+  { para: "/", rotulo: "Hoje", icone: House },
   { para: "/fiado", rotulo: "Fiado", icone: BookUser },
   { para: "/balanco", rotulo: "Balanço", icone: ChartNoAxesColumn },
   { para: "/produtos", rotulo: "Produtos", icone: Beer },

@@ -202,7 +202,8 @@ function useDadosInterno() {
 
   // ---------- Balanço ----------
 
-  /** Anota uma venda avulsa ou um gasto (ou edita um lançamento existente). */
+  /** Anota uma venda avulsa ou um gasto (ou edita um existente). Ao criar, devolve o
+   * lançamento novo, para a tela oferecer "Desfazer". */
   const salvarLancamento = (dados: {
     id?: string;
     tipo: "entrada" | "saida";
@@ -214,9 +215,9 @@ function useDadosInterno() {
   }) => {
     if (dados.id) {
       repos.lancamentos.atualizar(dados.id, dados);
-      return;
+      return undefined;
     }
-    repos.lancamentos.criar({ ...dados, origem: dados.tipo === "entrada" ? "avulsa" : "gasto" });
+    return repos.lancamentos.criar({ ...dados, origem: dados.tipo === "entrada" ? "avulsa" : "gasto" });
   };
 
   /** Apaga um lançamento (se for pagamento de fiado, a dívida volta para o cliente). */

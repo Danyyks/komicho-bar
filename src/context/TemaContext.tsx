@@ -39,7 +39,7 @@ export function TemaProvider({ children }: { children: ReactNode }) {
   // Aplica a classe no <html> e pinta a barra do sistema com a cor do fundo
   useEffect(() => {
     document.documentElement.classList.toggle("dark", escuro);
-    const cor = escuro ? "#14110E" : "#F6F3EF";
+    const cor = escuro ? "#1B1815" : "#FBF8F3";
     document.querySelectorAll('meta[name="theme-color"]').forEach((m) => m.setAttribute("content", cor));
   }, [escuro]);
 

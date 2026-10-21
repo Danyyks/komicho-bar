@@ -6,7 +6,7 @@ import { AuthProvider, useAuth } from "@/context/AuthContext";
 import { DadosProvider } from "@/context/DadosContext";
 import { Layout } from "@/components/Layout";
 import { nuvemLigada } from "@/lib/firebase";
-import { Comandas } from "@/pages/Comandas";
+import { Hoje } from "@/pages/Hoje";
 import { ComandaDetalhe } from "@/pages/ComandaDetalhe";
 import { Fiado } from "@/pages/Fiado";
 import { ClienteDetalhe } from "@/pages/ClienteDetalhe";
@@ -40,7 +40,7 @@ function Portao() {
     <DadosProvider>
       <Routes>
         <Route element={<Layout />}>
-          <Route index element={<Comandas />} />
+          <Route index element={<Hoje />} />
           <Route path="comanda/:id" element={<ComandaDetalhe />} />
           <Route path="fiado" element={<Fiado />} />
           <Route path="fiado/:id" element={<ClienteDetalhe />} />

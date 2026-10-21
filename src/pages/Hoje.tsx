@@ -1,13 +1,17 @@
-// Aba Comandas: lista das comandas abertas e o botão para abrir uma nova.
-import { useEffect, useState } from "react";
+// Tela inicial "Hoje": o caderninho do dia. Mostra quanto tem no caixa hoje, os três
+// botões principais (Nova comanda, Entrou dinheiro, Saiu dinheiro) e as comandas abertas.
+import { useEffect, useMemo, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { ChevronRight, Plus, ReceiptText } from "lucide-react";
+import { ArrowDownLeft, ArrowUpRight, ChevronRight, ReceiptText } from "lucide-react";
 import { useDados } from "@/context/DadosContext";
 import { CabecalhoAba } from "@/components/Cabecalho";
 import { Sheet } from "@/components/Sheet";
-import { Botao, BotaoFlutuante, Campo, Cartao, Vazio } from "@/components/ui";
+import { Botao, BotaoGrande, Campo, Cartao, TituloSecao } from "@/components/ui";
 import { reais, totalItens } from "@/lib/dinheiro";
-import { haQuantoTempo } from "@/lib/datas";
+import { haQuantoTempo, hojePorExtenso, periodoDe } from "@/lib/datas";
+import { resumir } from "@/lib/balanco";
+import { cn } from "@/lib/utils";
+import { EntrouDinheiro, SaiuDinheiro } from "./EntradaSaida";
 
 /** Atualiza a tela a cada minuto (para o "há 15 min" andar sozinho). */
 function useRelogio(): number {
@@ -19,24 +23,52 @@ function useRelogio(): number {
   return agora;
 }
 
-export function Comandas() {
-  const { comandas } = useDados();
+export function Hoje() {
+  const { comandas, lancamentos } = useDados();
   const agora = useRelogio();
-  const [novaAberta, setNovaAberta] = useState(false);
+  const [painel, setPainel] = useState<"comanda" | "entrou" | "saiu" | null>(null);
 
-  // Soma de tudo que está em aberto agora
-  const totalAberto = comandas.reduce((s, c) => s + totalItens(c.itens), 0);
-  const subtitulo =
-    comandas.length === 0
-      ? "Nenhuma aberta agora"
-      : `${comandas.length} ${comandas.length === 1 ? "aberta" : "abertas"} · ${reais(totalAberto)}`;
+  // Caixa de hoje: tudo que entrou menos tudo que saiu desde a meia-noite
+  const caixa = useMemo(() => resumir(lancamentos, periodoDe("dia", new Date(agora))), [lancamentos, agora]);
 
   return (
     <>
-      <CabecalhoAba titulo="Comandas" subtitulo={subtitulo} />
+      <CabecalhoAba titulo="Hoje" subtitulo={hojePorExtenso()} />
 
-      {/* Lista de comandas abertas (a mais antiga primeiro, como uma fila) */}
-      {comandas.length > 0 ? (
+      {/* Caixa do dia (toque abre o Balanço) */}
+      <Link to="/balanco" className="block transition-transform active:scale-[0.98]">
+        <Cartao className="p-5">
+          <div className="flex items-center justify-between">
+            <p className="text-[16px] font-medium text-texto-2">No caixa hoje</p>
+            <ChevronRight className="size-5 text-texto-3" />
+          </div>
+          <p className={cn("num mt-0.5 text-[38px] leading-tight font-bold tracking-tight", caixa.sobrou < 0 && "text-negativo")}>
+            {caixa.sobrou < 0 ? "− " : ""}
+            {reais(Math.abs(caixa.sobrou))}
+          </p>
+          <div className="mt-2 flex gap-5 text-[16px]">
+            <span className="text-positivo">
+              Entrou <span className="num font-semibold">{reais(caixa.entrou)}</span>
+            </span>
+            <span className="text-negativo">
+              Saiu <span className="num font-semibold">{reais(caixa.saiu)}</span>
+            </span>
+          </div>
+        </Cartao>
+      </Link>
+
+      {/* Os três botões principais */}
+      <div className="mt-4 flex flex-col gap-3">
+        <BotaoGrande cor="marca" icone={ReceiptText} titulo="Nova comanda" detalhe="Anotar o que o cliente pediu" onClick={() => setPainel("comanda")} />
+        <BotaoGrande cor="positivo" icone={ArrowDownLeft} titulo="Entrou dinheiro" detalhe="Venda no balcão, sem comanda" onClick={() => setPainel("entrou")} />
+        <BotaoGrande cor="negativo" icone={ArrowUpRight} titulo="Saiu dinheiro" detalhe="Compra de mercadoria e contas" onClick={() => setPainel("saiu")} />
+      </div>
+
+      {/* Comandas abertas (a mais antiga primeiro, como uma fila) */}
+      <TituloSecao>{comandas.length ? `Comandas abertas (${comandas.length})` : "Comandas abertas"}</TituloSecao>
+      {comandas.length === 0 ? (
+        <p className="px-1 text-[16px] text-texto-2">Nenhuma comanda aberta agora.</p>
+      ) : (
         <ul className="flex flex-col gap-3">
           {comandas.map((c) => {
             const qtd = c.itens.reduce((s, i) => s + i.qtd, 0);
@@ -58,15 +90,11 @@ export function Comandas() {
             );
           })}
         </ul>
-      ) : (
-        <Vazio icone={ReceiptText} titulo="Tudo fechado por aqui" texto="Quando alguém chegar, toque em Nova comanda." />
       )}
 
-      <BotaoFlutuante icone={Plus} onClick={() => setNovaAberta(true)}>
-        Nova comanda
-      </BotaoFlutuante>
-
-      <NovaComanda aberto={novaAberta} onFechar={() => setNovaAberta(false)} />
+      <NovaComanda aberto={painel === "comanda"} onFechar={() => setPainel(null)} />
+      <EntrouDinheiro aberto={painel === "entrou"} onFechar={() => setPainel(null)} />
+      <SaiuDinheiro aberto={painel === "saiu"} onFechar={() => setPainel(null)} />
     </>
   );
 }
@@ -107,7 +135,7 @@ function NovaComanda({ aberto, onFechar }: { aberto: boolean; onFechar: () => vo
         }}
       >
         <Campo
-          rotulo="Nome"
+          rotulo="Nome do cliente"
           placeholder="Ex.: Seu Zé"
           value={nome}
           onChange={(e) => setNome(e.target.value)}

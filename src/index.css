@@ -12,6 +12,7 @@
   --color-fundo: var(--k-fundo);
   --color-superficie: var(--k-superficie);
   --color-elevado: var(--k-elevado);
+  --color-controle: var(--k-controle);
   --color-linha: var(--k-linha);
   --color-texto: var(--k-texto);
   --color-texto-2: var(--k-texto-2);
@@ -25,6 +26,8 @@
   --color-positivo-suave: var(--k-positivo-suave);
   --color-negativo: var(--k-negativo);
   --color-negativo-suave: var(--k-negativo-suave);
+  --color-lilas-suave: var(--k-lilas-suave);
+  --color-lilas-tinta: var(--k-lilas-tinta);
 
   --shadow-cartao: var(--k-sombra-cartao);
   --shadow-flutuante: var(--k-sombra-flutuante);
@@ -32,49 +35,56 @@
   --ease-mola: cubic-bezier(0.32, 0.72, 0, 1);
 }
 
-/* Paleta clara: off-white quente + âmbar de cerveja */
+/* Paleta clara em tons pastel: creme quente, damasco, menta, rosa e lilás.
+   Os fundos são suaves e os textos escuros, para manter a leitura fácil. */
 :root {
-  --k-fundo: #f6f3ef;
+  --k-fundo: #fbf8f3;
   --k-superficie: #ffffff;
-  --k-elevado: #efebe5;
-  --k-linha: rgb(20 17 14 / 0.08);
-  --k-texto: #1a1612;
-  --k-texto-2: #6e655c;
-  --k-texto-3: #a39a90;
-  --k-marca: #f2a93b;
-  --k-marca-forte: #d98a1c;
-  --k-sobre-marca: #241604;
-  --k-marca-suave: #fcebd0;
-  --k-marca-tinta: #8a520c;
-  --k-positivo: #1d8a4b;
-  --k-positivo-suave: #ddf2e5;
-  --k-negativo: #d14343;
-  --k-negativo-suave: #fbe3e1;
-  --k-sombra-cartao: 0 1px 2px rgb(20 17 14 / 0.04), 0 6px 20px rgb(20 17 14 / 0.05);
-  --k-sombra-flutuante: 0 10px 40px rgb(20 17 14 / 0.16), 0 2px 8px rgb(20 17 14 / 0.06);
+  --k-elevado: #f4efe8;
+  --k-controle: #ffffff;
+  --k-linha: rgb(43 38 32 / 0.08);
+  --k-texto: #2b2620;
+  --k-texto-2: #786f65;
+  --k-texto-3: #ada398;
+  --k-marca: #f8cf94;
+  --k-marca-forte: #f3bd72;
+  --k-sobre-marca: #4a3110;
+  --k-marca-suave: #fdeedb;
+  --k-marca-tinta: #92601f;
+  --k-positivo: #2e7d55;
+  --k-positivo-suave: #ddf1e4;
+  --k-negativo: #b84c4f;
+  --k-negativo-suave: #f9e0e0;
+  --k-lilas-suave: #ece7f8;
+  --k-lilas-tinta: #5d4e8c;
+  --k-sombra-cartao: 0 1px 2px rgb(43 38 32 / 0.04), 0 6px 20px rgb(43 38 32 / 0.05);
+  --k-sombra-flutuante: 0 10px 40px rgb(43 38 32 / 0.14), 0 2px 8px rgb(43 38 32 / 0.05);
   color-scheme: light;
 }
 
-/* Paleta escura: café torrado, pensada para usar à noite no bar */
+/* Paleta escura: os mesmos tons pastel, mais apagados, sobre café (para usar à noite) */
 .dark {
-  --k-fundo: #14110e;
-  --k-superficie: #1e1a16;
-  --k-elevado: #2a251f;
-  --k-linha: rgb(255 240 220 / 0.08);
-  --k-texto: #f5f0ea;
-  --k-texto-2: #a89e92;
-  --k-texto-3: #6f665c;
-  --k-marca: #f5b04a;
-  --k-marca-forte: #f2a93b;
-  --k-sobre-marca: #241604;
-  --k-marca-suave: rgb(245 176 74 / 0.14);
-  --k-marca-tinta: #f7c06e;
-  --k-positivo: #4cc97e;
-  --k-positivo-suave: rgb(76 201 126 / 0.14);
-  --k-negativo: #ff7a6e;
-  --k-negativo-suave: rgb(255 122 110 / 0.14);
-  --k-sombra-cartao: 0 0 0 1px rgb(255 240 220 / 0.05);
-  --k-sombra-flutuante: 0 10px 40px rgb(0 0 0 / 0.5), 0 0 0 1px rgb(255 240 220 / 0.06);
+  --k-fundo: #1b1815;
+  --k-superficie: #25211d;
+  --k-elevado: #312b26;
+  --k-controle: #3d3631;
+  --k-linha: rgb(255 245 230 / 0.08);
+  --k-texto: #f4efe8;
+  --k-texto-2: #aba195;
+  --k-texto-3: #736a60;
+  --k-marca: #efc890;
+  --k-marca-forte: #e8b977;
+  --k-sobre-marca: #3a260c;
+  --k-marca-suave: rgb(239 200 144 / 0.16);
+  --k-marca-tinta: #f2d3a6;
+  --k-positivo: #a3d9b8;
+  --k-positivo-suave: rgb(163 217 184 / 0.15);
+  --k-negativo: #f0a9a9;
+  --k-negativo-suave: rgb(240 169 169 / 0.15);
+  --k-lilas-suave: rgb(196 181 240 / 0.16);
+  --k-lilas-tinta: #cfc2f5;
+  --k-sombra-cartao: 0 0 0 1px rgb(255 245 230 / 0.05);
+  --k-sombra-flutuante: 0 10px 40px rgb(0 0 0 / 0.5), 0 0 0 1px rgb(255 245 230 / 0.06);
   color-scheme: dark;
 }
 

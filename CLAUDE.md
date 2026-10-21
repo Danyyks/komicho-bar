@@ -13,6 +13,7 @@ npm run icones     # regenera os ícones do PWA a partir de public/favicon.svg
 
 ## Regras do projeto
 
+- **É um caderninho, não um sistema:** o app só substitui o papel (comanda, caixa entrou/saiu, fiado). Um funcionário mais velho usa: poucos toques, botões grandes com palavras, teclado de calculadora, cores pastel. Ver "Princípio do redesign" em `docs/arquitetura.md` antes de criar qualquer tela.
 - **Escopo do MVP fechado:** Comandas, Fiado, Balanço, Produtos. **Fora:** WhatsApp, QR Code Pix (a maquininha já faz), impressão, página do cliente e **controle de estoque** (o Balanço é só dinheiro: vendido × comprado).
 - **Dinheiro sempre em centavos** (inteiro). Formatar só na tela com `reais()`.
 - **Comentários curtos em PT-BR em cada bloco**, seguindo [`docs/padroes.md`](docs/padroes.md).
@@ -27,6 +28,8 @@ npm run icones     # regenera os ícones do PWA a partir de public/favicon.svg
 - `src/lib/balanco.ts`: cálculos do Balanço e saldo do fiado.
 - `src/lib/datas.ts`: períodos (semana começa na segunda).
 - `src/components/Sheet.tsx`: painel inferior (sempre via portal).
+- `src/components/Teclado.tsx`: teclado de calculadora para valores (`TecladoValor`).
+- `src/pages/Hoje.tsx` (tela inicial), `EntradaSaida.tsx` (Entrou/Saiu dinheiro), `FecharConta.tsx` (Dinheiro, Fiado e Ajustar valor da comanda).
 - Detalhes e decisões: [`docs/arquitetura.md`](docs/arquitetura.md). Deploy: [`docs/deploy.md`](docs/deploy.md). Manual de uso: [`docs/manual.md`](docs/manual.md).
 
 ## Armadilhas conhecidas

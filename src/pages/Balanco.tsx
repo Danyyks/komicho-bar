@@ -7,7 +7,6 @@ import {
   ArrowUpRight,
   ChevronLeft,
   ChevronRight,
-  Plus,
   ReceiptText,
   BookUser,
   Trash2,
@@ -18,7 +17,7 @@ import { useDados } from "@/context/DadosContext";
 import { useAviso } from "@/context/AvisoContext";
 import { CabecalhoAba } from "@/components/Cabecalho";
 import { Sheet } from "@/components/Sheet";
-import { Botao, BotaoFlutuante, Cartao, Segmentado, TituloSecao } from "@/components/ui";
+import { Botao, Cartao, Segmentado, TituloSecao } from "@/components/ui";
 import { reais, reaisCompacto } from "@/lib/dinheiro";
 import { dataEHora, deslocar, periodoDe, type Escala } from "@/lib/datas";
 import { resumir, type ResumoBalanco } from "@/lib/balanco";
@@ -55,7 +54,7 @@ export function Balanco() {
     setVerTodos(false);
   }
 
-  /** Toque num lançamento: vendas avulsas e gastos abrem para editar; o resto mostra o detalhe. */
+  /** Toque num lançamento: vendas avulsas e gastos abrem para corrigir; o resto mostra o detalhe. */
   function abrirLancamento(l: Lancamento) {
     if (l.origem === "avulsa" || l.origem === "gasto") setAnotar({ aberto: true, editar: l });
     else setDetalhe(l);
@@ -150,7 +149,7 @@ export function Balanco() {
         {resumo.lancamentos.length === 0 ? (
           <Cartao className="px-5 py-8 text-center">
             <Wallet className="mx-auto mb-3 size-8 text-texto-3" strokeWidth={1.8} />
-            <p className="text-[16px] text-texto-2">Nada neste período. As contas fechadas aparecem aqui sozinhas; gastos você anota no botão Anotar.</p>
+            <p className="text-[16px] text-texto-2">Nada neste período. As contas fechadas entram sozinhas; o resto você anota em Entrou dinheiro e Saiu dinheiro, na tela Hoje.</p>
           </Cartao>
         ) : (
           <Cartao className="divide-y divide-linha overflow-hidden">
@@ -165,10 +164,6 @@ export function Balanco() {
           </Cartao>
         )}
       </motion.div>
-
-      <BotaoFlutuante icone={Plus} onClick={() => setAnotar({ aberto: true })}>
-        Anotar
-      </BotaoFlutuante>
 
       <AnotarLancamento aberto={anotar.aberto} editar={anotar.editar} onFechar={() => setAnotar({ aberto: false, editar: anotar.editar })} />
       <DetalheLancamento lancamento={detalhe} onFechar={() => setDetalhe(null)} />

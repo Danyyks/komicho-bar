@@ -51,14 +51,25 @@ Coleções (uma por tipo, todas na raiz do Firestore):
 
 | Rota | Tela | Observação |
 |---|---|---|
-| `/` | `Comandas` | lista de abertas + "Nova comanda" |
-| `/comanda/:id` | `ComandaDetalhe` | esconde a barra de abas; rodapé com total e "Fechar conta" |
+| `/` | `Hoje` | caixa do dia + 3 botões (Nova comanda, Entrou dinheiro, Saiu dinheiro) + comandas abertas |
+| `/comanda/:id` | `ComandaDetalhe` | esconde a barra de abas; produtos em lista ("Mais pedidos" + categorias); rodapé com total e "Pagou como?" |
 | `/fiado` | `Fiado` | total a receber + clientes |
 | `/fiado/:id` | `ClienteDetalhe` | saldo, Recebi, Anotar, histórico |
 | `/balanco` | `Balanco` | escala Dia/Semana/Mês/Ano, gráfico e lançamentos |
 | `/produtos` | `Produtos` | cardápio + Ajustes (tema, instalar, conta) |
 
-Painéis (bottom sheets) não são rotas: são componentes `Sheet` abertos por estado local da tela.
+Painéis (bottom sheets) não são rotas: são componentes `Sheet` abertos por estado local da tela. Os da tela Hoje ficam em `pages/EntradaSaida.tsx` (Entrou/Saiu) e os do fechamento em `pages/FecharConta.tsx` (Dinheiro, Fiado, Ajustar valor).
+
+## Princípio do redesign (v0.3): o caderninho
+
+O app substitui o papel do bar e precisa servir para um funcionário mais velho. Regras que guiam qualquer tela nova:
+
+- **Menos toques:** Pix e Cartão fecham a comanda num toque; em Entrou/Saiu o toque na forma ou no motivo **já salva** (sem botão "Salvar").
+- **Teclado de calculadora (`components/Teclado.tsx`)** para valores: teclas grandes, igual à maquininha, sem abrir o teclado do celular. Os produtos e o fiado usam o mesmo componente; só o cadastro de produto e a edição de lançamento (telas do dono) ainda usam `CampoValor`.
+- **Tudo para baixo, nada para o lado:** produtos em lista vertical por categoria, com "Mais pedidos" (top 6 calculado dos itens das comandas já fechadas) no topo.
+- **Palavras, não ícones soltos:** "Cancelar esta comanda" e "Apagar este cliente" ficam escritos no fim da página.
+- **Tempo para errar:** o aviso com "Desfazer" fica 8 segundos.
+- **Cores pastel** com texto escuro (contraste alto): damasco = comanda/ação principal, menta = dinheiro que entra, rosa = dinheiro que sai, lilás = fiado. Tokens em `index.css` (`marca`, `positivo-suave`, `negativo-suave`, `lilas-suave`, `controle`).
 
 ## Decisões de interface
 
